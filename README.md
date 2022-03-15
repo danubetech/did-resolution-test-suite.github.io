@@ -4,13 +4,20 @@ _test suite for DID resolver_
 ## HTML reports
 
 This repository runs API tests for the following endpoints:
-- https://dev.uniresolver.io/1.0/identifiers/
-- https://resolver.svip.danubetech.com/1.0/identifiers/
-- https://api.godiddy.com/0.1.0/universal-resolver/identifiers/
+- `https://dev.uniresolver.io/1.0/identifiers/`
+- `https://resolver.svip.danubetech.com/1.0/identifiers/`
+- `https://api.godiddy.com/0.1.0/universal-resolver/identifiers/`
 
 <!-- In the current version of this repository, the report of https://dev.uniresolver.io/1.0/identifiers/ is shown.  -->
 
 ### Running test suite locally
+
+To install Cypress and dependencies (first time):
+```markdown
+npm i -g cypress
+cypress install
+npm i
+```
 
 To run the test only without creating reports:
 ```markdown
