@@ -10,9 +10,7 @@ In the current version of this repository, the report of https://dev.uniresolver
 ### Running the report
 
 Running the tests locally: 
-```markdown
-npm run test
-```
+`npm run test`
 
 
 
