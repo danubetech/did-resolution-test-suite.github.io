@@ -30,7 +30,7 @@ To run the test and create the reports:
 npm run test
 ```
 
-`npm run test` runs `npm run cypress:run || npm run posttest`. `npm run scripts` 
+`npm run test` executes `npm run cypress:run || npm run posttest`. `npm run cypress:run` 
 runs Cypress tests to completion. By default, cypress run will run 
 all tests headlessly. With `npm run posttest` reports for each single spec are created and combined. The
 single reports for each spec are stored in `cypress/reports/mocha`. The combined report, including all specs, 
