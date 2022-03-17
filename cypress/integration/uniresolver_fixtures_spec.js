@@ -63,7 +63,7 @@ describe("Test Scenario 2: JSON-LD DID document", () => {
 });
 
 describe("Test Scenario 3: Representation not supported", () => {
-  it("Shows an error when a representation is prompted", () => {
+  it.only("Shows an error when a representation is prompted", () => {
     cy.fixture("../fixtures/example_dids.json")
       .its("normalDids")
       .then((list) => {

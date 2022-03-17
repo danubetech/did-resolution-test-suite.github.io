@@ -7,7 +7,7 @@ describe("Test Scenario 1: DID Resolution Result overview: " + endpoint, () => {
     }).as("request");
   });
 
-  it("MUST return HTTP code 200", () => {
+  it.only("MUST return HTTP code 200", () => {
     cy.get("@request").then((response) => {
       expect(response.status).to.eq(200);
     });
