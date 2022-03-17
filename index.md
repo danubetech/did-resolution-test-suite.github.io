@@ -12,8 +12,6 @@ In the current version of this repository, the report of https://dev.uniresolver
 Running the tests locally:
 `npm run test`
 
-### Reports (dynamically): 
-Report of [2022_03_17_12_14](https://danubetech.github.io/did-resolution-test-suite/cypress/timestamp/path_folder/reports.html).
-Report of [2022_03_17_12_14](https://danubetech.github.io/did-resolution-test-suite/cypress/timestamp/path_folder/reports.html).
-Report of [2022_03_17_12_14](https://danubetech.github.io/did-resolution-test-suite/cypress/timestamp/path_folder/reports.html).
-Report of [2022_03_17_12_14](https://danubetech.github.io/did-resolution-test-suite/cypress/timestamp/path_folder/reports.html).
+### todo Reports (dynamically)
+
+[//]: # (Report of [2022_03_17_12_14]&#40;https://danubetech.github.io/did-resolution-test-suite/cypress/timestamp/path_folder/reports.html&#41;.)
