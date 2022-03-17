@@ -1,37 +1,68 @@
-## Welcome to GitHub Pages
+# did-resolution-test-suite
+_test suite for DID resolver_
 
-You can use the [editor on GitHub](https://github.com/danubetech/did-resolution-test-suite/edit/slack-reporter/README.md) to maintain and preview the content for your website in Markdown files.
+## HTML reports
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This repository runs API tests for the following endpoints:
+- `https://dev.uniresolver.io/1.0/identifiers/`
+- `https://resolver.svip.danubetech.com/1.0/identifiers/`
+- `https://api.godiddy.com/0.1.0/universal-resolver/identifiers/`
 
-### Markdown
+<!-- In the current version of this repository, the report of https://dev.uniresolver.io/1.0/identifiers/ is shown.  -->
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Running test suite locally
 
+To install Cypress and dependencies (first time):
 ```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+npm i -g cypress
+cypress install
+npm i
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+To run the test only without creating reports:
+```markdown
+cypress run
+```
 
-### Jekyll Themes
+To run the test and create the reports:
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/danubetech/did-resolution-test-suite/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+```markdown
+npm run test
+```
 
-### Support or Contact
+`npm run test` executes `npm run cypress:run || npm run posttest`. `npm run cypress:run`
+runs Cypress tests to completion. By default, cypress run will run
+all tests headlessly. With `npm run posttest` reports for each single spec are created and combined. The
+single reports for each spec are stored in `cypress/reports/mocha`. The combined report, including all specs,
+can be found in `cypress/reports/mochareports` which is stored as both a `.json` file and an `.html` file.
+In addition to these command, `clean:reports` is run each
+time `npm run test` is executed. This command deletes all old results and reports from
+the `cypress/reports` directory before new reports are created.
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+### Run single specs 
+A single spec can also be executed with the following: 
+
+```markdown
+npm run test -- --spec <<path_to_spec>>
+```
+
+e.g to run the resolver spec:
+
+```markdown
+npm run test -- --spec "cypress/integration/resolver_spec.js"
+```
+
+
+### Test different endpoints
+All specs are run with endpoint: `https://api.godiddy.com/0.1.0/universal-resolver/identifiers/` by default. Other endpoints can 
+be tested by passing in endpoint in the `endpoint` environment variable in the command line: 
+
+```markdown
+npm run test -- --env endpoint=<<ENDPOINT>>
+```
+
+### Where to find the test reports
+The results will be stored in a local folder `cypress/reports/mocha`.
+Test results in this folder contain the result of each spec in a json format.
+A merged or combined result of all specs can be found in the local folder
+`cypress/reports/mochareports`. A combined result is stored in both a json file and an HTML file.
