@@ -11,3 +11,7 @@ In the current version of this repository, the report of https://dev.uniresolver
 
 Running the tests locally:
 `npm run test`
+
+### The report can be found [here](https://danubetech.github.io/did-resolution-test-suite/reports.html).
+
+{% include reports.html %}
