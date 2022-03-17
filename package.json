@@ -4,18 +4,15 @@
   "scripts": {
     "cypress:run": "cypress run",
     "cypress:open": "cypress open",
-    "combine:reports": "jrm cypress/results/combined-report.xml \"cypress/results/*.xml\"",
-    "prereport": "npm run delete:reports",
     "postreport": "npm run combine:reports",
     "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports  && mkdir cypress/reports/mocha",
-    "clean:reports:old": "rm -R -f cypress/reports/mocha && mkdir cypress/reports/mocha",
     "pretest": "npm run clean:reports",
-    "scripts": "cypress run",
     "combine-reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
-    "generate-report": "marge cypress/reports/mochareports/report.json -f $(date \"+%Y-%m-%d-%H\")-report -o cypress/reports/mochareports",
+    "generate-report": "marge cypress/reports/mochareports/report.json -f reports -o cypress/reports/mochareports",
     "posttest": "npm run combine-reports && npm run generate-report",
-    "test": "NOW=$(date +%s) && npm run scripts || npm run posttest",
-    "final": "npx cypress-slack-reporter --report-dir cypress/reports/mochareports --ci-provider custom --custom-url https://danubetech.github.io/did-resolution-test-suite"
+    "test": "npm run cypress:run || npm run posttest",
+    "final": "npx cypress-slack-reporter --ci-provider custom --custom-url https://danubetech.github.io/did-resolution-test-suite --report-dir cypress/reports/mochareports"
+
   },
   "devDependencies": {
     "cypress": "^9.5.1",

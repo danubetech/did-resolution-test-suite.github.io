@@ -1,5 +1,6 @@
-describe("Test Scenario 1: DID Resolution Result fixtures", () => {
-  it.only("A correct DID can be resolved", () => {
+const endpoint = Cypress.env("endpoint");
+describe("Test Scenario 1: DID Resolution Result fixtures: " + endpoint, () => {
+  it("A correct DID can be resolved", () => {
     cy.fixture("../fixtures/example_dids.json")
       .its("normalDids")
       .then((list) => {
@@ -7,30 +8,30 @@ describe("Test Scenario 1: DID Resolution Result fixtures", () => {
           const normalDid = list[key];
           cy.request({
             method: "GET",
-            url: "https://dev.uniresolver.io/1.0/identifiers/" + normalDid,
+            url: endpoint + normalDid,
           }).as("request");
 
           cy.get("@request").then((response) => {
             expect(response.status).to.eq(200);
           });
 
-          // cy.get("@request").then((response) => {
-          //   expect(response.headers["content-type"]).to.contain(
-          //     'application/ld+json;profile="https://w3id.org/did-resolution'
-          //   );
-          // });
-          //
-          // cy.get("@request").then((response) => {
-          //   expect(response.body).to.have.property("didDocument");
-          // });
-          //
-          // cy.get("@request").then((response) => {
-          //   expect(response.body).to.have.property("didResolutionMetadata");
-          // });
-          //
-          // cy.get("@request").then((response) => {
-          //   expect(response.body).to.have.property("didDocumentMetadata");
-          // });
+          cy.get("@request").then((response) => {
+            expect(response.headers["content-type"]).to.contain(
+              'application/ld+json;profile="https://w3id.org/did-resolution'
+            );
+          });
+
+          cy.get("@request").then((response) => {
+            expect(response.body).to.have.property("didDocument");
+          });
+
+          cy.get("@request").then((response) => {
+            expect(response.body).to.have.property("didResolutionMetadata");
+          });
+
+          cy.get("@request").then((response) => {
+            expect(response.body).to.have.property("didDocumentMetadata");
+          });
         });
       });
   });
@@ -45,7 +46,7 @@ describe("Test Scenario 2: JSON-LD DID document", () => {
           const normalDid = list[key];
           cy.request({
             method: "GET",
-            url: "https://dev.uniresolver.io/1.0/identifiers/" + normalDid,
+            url: endpoint + normalDid,
             headers: { Accept: "application/did+ld+json" },
           }).as("headers");
           cy.get("@headers").then((response) => {
@@ -62,7 +63,7 @@ describe("Test Scenario 2: JSON-LD DID document", () => {
 });
 
 describe("Test Scenario 3: Representation not supported", () => {
-  it("Shows an error when a representation is prompted", () => {
+  it.only("Shows an error when a representation is prompted", () => {
     cy.fixture("../fixtures/example_dids.json")
       .its("normalDids")
       .then((list) => {
@@ -71,7 +72,7 @@ describe("Test Scenario 3: Representation not supported", () => {
 
           cy.request({
             method: "GET",
-            url: "https://dev.uniresolver.io/1.0/identifiers/" + normalDid,
+            url: endpoint + normalDid,
             headers: { Accept: "image/png" },
             failOnStatusCode: false,
           }).then((response) => {
@@ -92,7 +93,7 @@ describe("Test Scenario 4: Deactivated", () => {
 
           cy.request({
             method: "GET",
-            url: "https://dev.uniresolver.io/1.0/identifiers/" + deacDid,
+            url: endpoint + deacDid,
             failOnStatusCode: false,
           }).then((response) => {
             expect(response.status).to.eq(410);
@@ -100,7 +101,7 @@ describe("Test Scenario 4: Deactivated", () => {
               'application/ld+json;profile="https://w3id.org/did-resolution"'
             );
             //FAILS
-            expect(response.body.didResolutionMetadata.deactivated).to.eq(true);
+            expect(response.body.didDocumentMetadata.deactivated).to.eq(true);
           });
         });
       });
@@ -117,7 +118,7 @@ describe("Test Scenario 5: Not found", () => {
 
           cy.request({
             method: "GET",
-            url: "https://dev.uniresolver.io/1.0/identifiers/" + nonExDid,
+            url: endpoint + nonExDid,
             failOnStatusCode: false,
           }).then((response) => {
             expect(response.status).to.eq(404);
@@ -141,7 +142,7 @@ describe("Test Scenario 6: Invalid DID", () => {
 
           cy.request({
             method: "GET",
-            url: "https://dev.uniresolver.io/1.0/identifiers/" + invalidDid,
+            url: endpoint + invalidDid,
             failOnStatusCode: false,
           }).then((response) => {
             expect(response.status).to.eq(400);
@@ -167,7 +168,7 @@ describe("Test Scenario 7: DID URLs with fragments", () => {
 
           cy.request({
             method: "GET",
-            url: "https://dev.uniresolver.io/1.0/identifiers/" + fragmentDid,
+            url: endpoint + fragmentDid,
             failOnStatusCode: false,
             headers: { Accept: "application/did+ld+json" },
           }).as("request");

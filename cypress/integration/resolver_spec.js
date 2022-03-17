@@ -1,8 +1,9 @@
-describe("Test Scenario 1: DID Resolution Result overview", () => {
+const endpoint = Cypress.env("endpoint");
+describe("Test Scenario 1: DID Resolution Result overview: " + endpoint, () => {
   beforeEach(() => {
     cy.request({
       method: "GET",
-      url: "https://dev.uniresolver.io/1.0/identifiers/did:sov:WRfXPg8dantKVubE3HX8pw",
+      url: endpoint + "did:sov:WRfXPg8dantKVubE3HX8pw",
     }).as("request");
   });
 
@@ -41,7 +42,7 @@ describe("Test Scenario 2: JSON-LD DID document", () => {
   beforeEach(() => {
     cy.request({
       method: "GET",
-      url: "https://dev.uniresolver.io/1.0/identifiers/did:sov:WRfXPg8dantKVubE3HX8pw",
+      url: endpoint + "did:sov:WRfXPg8dantKVubE3HX8pw",
       headers: { Accept: "application/did+ld+json" },
     }).as("headers");
   });
@@ -77,7 +78,7 @@ describe("Test Scenario 3: Representation not supported", () => {
   it("MUST return HTTP code 406", () => {
     cy.request({
       method: "GET",
-      url: "https://dev.uniresolver.io/1.0/identifiers/did:sov:WRfXPg8dantKVubE3HX8pw",
+      url: endpoint + "did:sov:WRfXPg8dantKVubE3HX8pw",
       failOnStatusCode: false,
       headers: { Accept: "image/png" },
     }).then((response) => {
@@ -90,7 +91,8 @@ describe("Test Scenario 4: Deactivated", () => {
   it("MUST return HTTP code 410", () => {
     cy.request({
       method: "GET",
-      url: "https://dev.uniresolver.io/1.0/identifiers/did:kilt:4r6RdVMNes2eEobxyxH7aVsesUqR2X175sUAXJfo7dEWxHUS",
+      url:
+        endpoint + "did:kilt:4r6RdVMNes2eEobxyxH7aVsesUqR2X175sUAXJfo7dEWxHUS",
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.status).to.eq(410);
@@ -99,7 +101,8 @@ describe("Test Scenario 4: Deactivated", () => {
   it("MUST return HTTP header Content-Type", () => {
     cy.request({
       method: "GET",
-      url: "https://dev.uniresolver.io/1.0/identifiers/did:kilt:4r6RdVMNes2eEobxyxH7aVsesUqR2X175sUAXJfo7dEWxHUS",
+      url:
+        endpoint + "did:kilt:4r6RdVMNes2eEobxyxH7aVsesUqR2X175sUAXJfo7dEWxHUS",
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.headers["content-type"]).to.contain(
@@ -110,11 +113,11 @@ describe("Test Scenario 4: Deactivated", () => {
   it("JSON object MUST contain property didDocumentMetadata.deactivated = true", () => {
     cy.request({
       method: "GET",
-      url: "https://dev.uniresolver.io/1.0/identifiers/did:kilt:4r6RdVMNes2eEobxyxH7aVsesUqR2X175sUAXJfo7dEWxHUS",
+      url:
+        endpoint + "did:kilt:4r6RdVMNes2eEobxyxH7aVsesUqR2X175sUAXJfo7dEWxHUS",
       failOnStatusCode: false,
     }).then((response) => {
-      console.log(response.body.didResolutionMetadata);
-      expect(response.body.didResolutionMetadata.deactivated).to.eq(true);
+      expect(response.body.didDocumentMetadata.deactivated).to.eq(true);
     });
   });
 });
@@ -123,7 +126,7 @@ describe("Test Scenario 5: Not found", () => {
   it("MUST return HTTP code 404", () => {
     cy.request({
       method: "GET",
-      url: "https://dev.uniresolver.io/1.0/identifiers/did:sov:0000000000000000000000",
+      url: endpoint + "did:sov:0000000000000000000000",
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.status).to.eq(404);
@@ -132,7 +135,7 @@ describe("Test Scenario 5: Not found", () => {
   it('MUST return HTTP header Content-Type with value application/ld+json;profile="https://w3id.org/did-resolution"', () => {
     cy.request({
       method: "GET",
-      url: "https://dev.uniresolver.io/1.0/identifiers/did:sov:0000000000000000000000",
+      url: endpoint + "did:sov:0000000000000000000000",
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.headers["content-type"]).to.contain(
@@ -155,7 +158,7 @@ describe("Test Scenario 6: Invalid DID", () => {
   it("MUST return HTTP code 400", () => {
     cy.request({
       method: "GET",
-      url: "https://dev.uniresolver.io/1.0/identifiers/did:example_222",
+      url: endpoint + "did:example_222",
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.status).to.eq(400);
@@ -164,7 +167,7 @@ describe("Test Scenario 6: Invalid DID", () => {
   it('MUST return HTTP header Content-Type with value application/ld+json;profile="https://w3id.org/did-resolution"', () => {
     cy.request({
       method: "GET",
-      url: "https://dev.uniresolver.io/1.0/identifiers/did:example_222",
+      url: endpoint + "did:example_222",
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.headers["content-type"]).to.contain(
@@ -175,7 +178,7 @@ describe("Test Scenario 6: Invalid DID", () => {
   it('JSON object MUST contain property didResolutionMetadata.error = "invalidDid"', () => {
     cy.request({
       method: "GET",
-      url: "https://dev.uniresolver.io/1.0/identifiers/did:example_222",
+      url: endpoint + "did:example_222",
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.body.didResolutionMetadata.error).to.eq("invalidDid");
@@ -188,7 +191,7 @@ describe("Test Scenario 7: DID URLs with fragments", () => {
   beforeEach(() => {
     cy.request({
       method: "GET",
-      url: "https://dev.uniresolver.io/1.0/identifiers/did%3Asov%3AWRfXPg8dantKVubE3HX8pw%23key-1",
+      url: endpoint + "did%3Asov%3AWRfXPg8dantKVubE3HX8pw%23key-1",
       headers: { Accept: "application/did+ld+json" },
       failOnStatusCode: false,
     }).as("headers");
