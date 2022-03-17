@@ -14,4 +14,4 @@ Running the tests locally:
 
 ### The report can be found [here](https://danubetech.github.io/did-resolution-test-suite/cypress/reports/mochareports/reports.html).
 
-{% include reports.html %}
+{% include cypress/reports/mochareports/reports.html %}
