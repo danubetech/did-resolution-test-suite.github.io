@@ -14,4 +14,4 @@ Running the tests locally:
 
 ### todo Reports (dynamically)
 
-[//]: # (Report of [2022_03_17_12_14]&#40;https://danubetech.github.io/did-resolution-test-suite/cypress/timestamp/path_folder/reports.html&#41;.)
+[//]: # (Report of [2022_03_17]&#40;https://danubetech.github.io/did-resolution-test-suite/cypress/timestamp/path_folder/reports.html&#41;.)
