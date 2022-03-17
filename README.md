@@ -1,4 +1,4 @@
-# did-resolution-test-suite
+_# did-resolution-test-suite
 _test suite for DID resolver_
 
 ## HTML reports
@@ -43,5 +43,5 @@ the `cypress/reports` directory before new reports are created.
 The results will be stored in a local folder _/cypress/reports/mocha_. 
 Test results in this folder contain the result of each spec in a json format. 
 A merged or combined result of all specs can be found in the local folder 
-_/cypress/reports/mochareports_. A combined result is stored in both a json file and an HTML file. 
+_/cypress/reports/mochareports_. A combined result is stored in both a json file and an HTML file._ 
 
