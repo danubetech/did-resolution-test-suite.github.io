@@ -39,6 +39,28 @@ In addition to these command, `clean:reports` is run each
 time `npm run test` is executed. This command deletes all old results and reports from
 the `cypress/reports` directory before new reports are created.
 
+### Run single specs 
+A single spec can also be executed with the following: 
+
+```markdown
+npm run test -- --spec <<path_to_spec>>
+```
+
+e.g to run the resolver spec:
+
+```markdown
+npm run test -- --spec "cypress/integration/resolver_spec.js"
+```
+
+
+### Test different endpoints
+All specs are run with endpoint: `https://api.godiddy.com/0.1.0/universal-resolver/identifiers/`. Other endpoints can 
+be tested by passing in the `endpoint` environment variable in the command line: 
+
+```markdown
+npm run test -- --env endpoint=<<ENDPOINT>>
+```
+
 ### Where to find the test reports
 The results will be stored in a local folder _/cypress/reports/mocha_.
 Test results in this folder contain the result of each spec in a json format.
