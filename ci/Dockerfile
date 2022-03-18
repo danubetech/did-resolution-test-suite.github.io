@@ -11,6 +11,9 @@ LABEL "maintainer"="Bernhard Fuchs <bernhard.fuchs@danubetech.com>"
 RUN apt-get update && apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 
 ADD . /opt/did-resolution-test-suite
+RUN ls -l /
+RUN ls -l /opt
+RUN ls -l /opt/did-resolution-test-suite
 RUN cd /opt/did-resolution-test-suite && npm install
 RUN cd /opt/did-resolution-test-suite && node_modules/cypress/bin/cypress install
 
