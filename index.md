@@ -12,6 +12,6 @@ In the current version of this repository, the report of https://dev.uniresolver
 Running the tests locally:
 `npm run test`
 
-### The report can be found [here](https://danubetech.github.io/did-resolution-test-suite/reports.html).
+### todo Reports (dynamically)
 
-{% include reports.html %}
+[//]: # (Report of [2022_03_17]&#40;https://danubetech.github.io/did-resolution-test-suite/cypress/timestamp/path_folder/reports.html&#41;.)
