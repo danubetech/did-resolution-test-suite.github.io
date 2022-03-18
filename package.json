@@ -4,16 +4,15 @@
   "scripts": {
     "cypress:run": "cypress run",
     "cypress:open": "cypress open",
-    "report": "cypress run --reporter cypress-multi-reporters --reporter-options configFile=reporter-config.json",
-    "delete:reports": "rm cypress/results/* || true; rm mochawesome-report/* || true;",
-    "cypress:reporter": "cypress run --reporter mochawesome --reporter-options reportDir=\"cypress/results\",overwrite=false,html=false,json=true",
-    "cypress:mochawesome_merge": "npx mochawesome-merge \"cypress/results/*.json\" > cypress/mochawesome.json",
-    "cypress:marge": "npx marge cypress/mochawesome.json",
-    "reports": "npm run prereport; npm run cypress:reporter; npm run cypress:mochawesome_merge; npm run cypress:marge",
-    "combine:reports": "jrm cypress/results/combined-report.xml \"cypress/results/*.xml\"",
-    "prereport": "npm run delete:reports",
-    "postreport": "npm run combine:reports"
-  },
+    "postreport": "npm run combine:reports",
+    "clean:reports": "rm -R -f reports && mkdir reports && mkdir reports/mochareports  && mkdir reports/mocha",
+    "pretest": "npm run clean:reports",
+    "combine-reports": "mochawesome-merge reports/mocha/*.json > reports/mochareports/report.json",
+    "generate-report": "marge reports/mochareports/report.json -f reports -o reports/mochareports",
+    "posttest": "npm run combine-reports && npm run generate-report",
+    "test": "npm run cypress:run || npm run posttest",
+    "final": "npx cypress-slack-reporter --ci-provider custom --custom-url https://danubetech.github.io/did-resolution-test-suite --report-dir reports/mochareports"
+},
   "devDependencies": {
     "cypress": "^9.5.1",
     "cypress-multi-reporters": "^1.5.0",
