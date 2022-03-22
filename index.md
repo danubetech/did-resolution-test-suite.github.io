@@ -6,8 +6,6 @@ This page shows the results of several API tests. The following endpoints are te
 - `https://api.godiddy.com/0.1.0/universal-resolver/identifiers/`
 - `https://api.dev.godiddy.com/0.1.0/universal-resolver/identifiers/`
 
-In the current version of this repository, the report of https://dev.uniresolver.io/1.0/identifiers/ is shown.
-
 ### Running the report
 
 Running the tests locally:
