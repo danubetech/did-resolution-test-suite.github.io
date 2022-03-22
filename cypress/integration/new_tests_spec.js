@@ -1,3 +1,5 @@
+const { softExpect } = chai;
+
 const endpoint = Cypress.env("ENDPOINT");
 
 describe.skip("Test Scenario 2b: CBOR DID document: " + endpoint, () => {
@@ -265,31 +267,58 @@ describe("Test Scenario 12C: Resolve a DID / dereference a DID URL", () => {
 
 describe.only("Test Scenario 13: Retrieve configuration properties", () => {
   it("MUST return HTTP response status 200", () => {
-    cy.request({
-      method: "GET",
-      url: endpoint + "properties",
-      headers: {
-        Accept:
-          'application/ld+json;profile="https://w3c-ccg.github.io/did-resolution/"',
-      },
-      failOnStatusCode: false,
-    }).then((response) => {
-      expect(response.status).to.eq(200);
+    it("MUST return HTTP response status 200", () => {
+      cy.request({
+        method: "GET",
+        url: "https://api.dev.godiddy.com/0.1.0/universal-resolver/properties",
+        failOnStatusCode: false,
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+      });
     });
   });
 });
 
 describe.only("Test Scenario 14: Retrieve supported DID methods", () => {
-  it("MUST return HTTP response status 200", () => {
+  it("Test HTTP response", () => {
     cy.request({
       method: "GET",
-      url: endpoint + "methods",
-      headers: {
-        Accept: "application/did+json",
-      },
+      url: "https://api.dev.godiddy.com/0.1.0/universal-resolver/methods",
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.status).to.eq(200);
+      // todo: do this for other tests as well json object
+      expect(response.body).to.be.a("array");
+      expect(response.body).to.deep.equal([
+        "btcr",
+        "sov",
+        "v1",
+        "web",
+        "ethr",
+        "jolo",
+        "elem",
+        "github",
+        "key",
+        "ion",
+        "gatc",
+        "ebsi",
+        "tz",
+        "pkh",
+      ]);
+    });
+  });
+});
+
+describe.only("Test Scenario 15: Retrieve object of test identifiers", () => {
+  it("Test HTTP response", () => {
+    cy.request({
+      method: "GET",
+      url: "https://api.dev.godiddy.com/0.1.0/universal-resolver/testIdentifiers",
+      failOnStatusCode: false,
+    }).then((response) => {
+      console.log(response.body);
+      expect(response.status).to.eq(200);
+      expect(response.body).to.be.a("object");
     });
   });
 });
