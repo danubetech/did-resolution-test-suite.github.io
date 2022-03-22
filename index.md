@@ -8,10 +8,10 @@ This page shows the results of several API tests. The following endpoints are te
 
 ### Running the report
 
-Running the tests locally:
+To run the tests locally run:
 `npm run test`
 
-### todo Reports (dynamically)
+[//]: # (### todo Reports &#40;dynamically&#41;)
 
 [//]: # (Report of [2022_03_17]&#40;https://danubetech.github.io/did-resolution-test-suite/cypress/timestamp/path_folder/reports.html&#41;.)
 Most recent report can be found [here](https://danubetech.github.io/did-resolution-test-suite/reports/mochareports/reports.html).
