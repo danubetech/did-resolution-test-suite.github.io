@@ -10,7 +10,6 @@ describe("Test Scenario 2b: CBOR DID document: " + endpoint, () => {
       headers: { Accept: "application/did+cbor" },
       failOnStatusCode: false,
     }).then((response) => {
-      console.log(response);
       expect(response.status).to.eq(200);
     });
   });
@@ -87,7 +86,6 @@ describe("Test Scenario 9: DID URLs with transformKeys", () => {
       headers: { Accept: "application/did+ld+json" },
       failOnStatusCode: false,
     }).then((response) => {
-      console.log(response);
       expect(response.headers).has.property(
         "content-type",
         "application/did+ld+json;charset=utf-8"
@@ -135,7 +133,6 @@ describe("Test Scenario 9: DID URLs with transformKeys", () => {
       headers: { Accept: "application/did+ld+json" },
       failOnStatusCode: false,
     }).then((response) => {
-      console.log(response.body);
       expect(response.body.authentication[0]).to.eq(
         "did:sov:WRfXPg8dantKVubE3HX8pw#key-1"
       );
@@ -256,7 +253,9 @@ describe("Test Scenario 11: DID URLs with versionId parameter", () => {
       headers: { Accept: "application/did+ld+json;charset=utf-8" },
       failOnStatusCode: false,
     }).then((response) => {
-      expect(response.headers["content-type"]).to.contain("application/json");
+      expect(response.headers["content-type"]).to.contain(
+        "application/did+ld+json;charset=utf-8"
+      );
     });
   });
 
@@ -271,17 +270,6 @@ describe("Test Scenario 11: DID URLs with versionId parameter", () => {
         "id",
         "did:sov:DjxRxnL4gXsncbH8jM8ySM"
       );
-    });
-  });
-
-  it("MUST contain property timestamp", () => {
-    cy.request({
-      method: "GET",
-      url: endpoint + "did:sov:DjxRxnL4gXsncbH8jM8ySM?versionId=105",
-      headers: { Accept: "application/did+ld+json;charset=utf-8" },
-      failOnStatusCode: false,
-    }).then((response) => {
-      expect(response.body).to.have.property("timestamp");
     });
   });
 });
@@ -345,7 +333,6 @@ describe("Test Scenario 12: Resolve a DID / dereference a DID URL", () => {
       headers: { Accept: "application/json" },
       failOnStatusCode: false,
     }).then((response) => {
-      console.log(response);
       expect(response.body["assertionMethod"][0]).to.contain(
         "did:sov:builder:VbPQNHsvoLZdaNU7fTBeFx"
       );
@@ -359,7 +346,6 @@ describe("Test Scenario 12: Resolve a DID / dereference a DID URL", () => {
       headers: { Accept: "application/json" },
       failOnStatusCode: false,
     }).then((response) => {
-      console.log(response);
       expect(response.body["keyAgreement"][0]).to.contain(
         "did:sov:builder:VbPQNHsvoLZdaNU7fTBeFx"
       );
@@ -394,7 +380,7 @@ describe("Test Scenario 12B: Resolve a DID / dereference a DID URL", () => {
     }).then((response) => {
       expect(response.headers).has.property(
         "content-type",
-        "application/did+json;charset=utf-8"
+        'application/ld+json; profile="https://w3c-ccg.github.io/did-resolution/"'
       );
     });
   });
@@ -424,7 +410,6 @@ describe("Test Scenario 13: Retrieve configuration properties", () => {
       method: "GET",
       url: "https://api.dev.godiddy.com/0.1.0/universal-resolver/properties",
     }).then((response) => {
-      console.log(response);
       expect(response.headers).has.property(
         "content-type",
         "application/json;charset=utf-8"
@@ -507,7 +492,6 @@ describe("Test Scenario 15: Retrieve object of test identifiers", () => {
       url: "https://api.dev.godiddy.com/0.1.0/universal-resolver/testIdentifiers",
       failOnStatusCode: false,
     }).then((response) => {
-      console.log(response);
       expect(response).to.be.a("object");
     });
   });
@@ -519,19 +503,6 @@ describe("Test Scenario 15: Retrieve object of test identifiers", () => {
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.body).to.be.a("object");
-    });
-  });
-
-  it("MUST return HTTP header Content-Type that contains application/did+json", () => {
-    cy.request({
-      method: "GET",
-      url: "https://api.dev.godiddy.com/0.1.0/universal-resolver/testIdentifiers",
-      failOnStatusCode: false,
-    }).then((response) => {
-      expect(response.body).has.property(
-        "content-type",
-        "application/did+json"
-      );
     });
   });
 });
