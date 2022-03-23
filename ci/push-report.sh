@@ -1,16 +1,16 @@
 #!/bin/sh
 
 echo "Created following report:"
-ls -l "$PWD/did-resolution-test-suite/reports/mochareports/"
+ls -l "$PWD/reports/mochareports/"
 
 echo "Save tests to folder"
 DATE_WITH_TIME=$(TZ=UTC date "+%Y-%m-%d_%H:%M:%S")
-REPORT_FOLDER="$PWD/did-resolution-test-suite/gh-pages/$DATE_WITH_TIME"
+REPORT_FOLDER="$PWD/gh-pages/$DATE_WITH_TIME"
 
 mkdir "$REPORT_FOLDER"
-cp -r "$PWD/did-resolution-test-suite/reports/." "$REPORT_FOLDER"
+cp -r "$PWD/reports/." "$REPORT_FOLDER"
 echo "gh-pages folder"
-ls -l "$PWD/did-resolution-test-suite/gh-pages/"
+ls -l "$PWD/gh-pages/"
 echo "reports folder"
 ls -l "$REPORT_FOLDER"
 
