@@ -14,9 +14,9 @@ ls -l "$PWD/gh-pages/"
 echo "reports folder"
 ls -l "$REPORT_FOLDER"
 
-#echo "Push result file to repo"
-#git config --global user.email "admin@danubetech.com"
-#git config --global user.name "Did Resolution tests"
-#git add "$REPORT_FOLDER"
-#git commit -m "$DATE_WITH_TIME Did Resolution test report"
-#git push origin main:gh-pages
+echo "Push result file to repo"
+git config --global user.email "admin@danubetech.com"
+git config --global user.name "Did Resolution tests"
+git add "$REPORT_FOLDER"
+git commit -m "$DATE_WITH_TIME Did Resolution test report"
+git push origin main:gh-pages
