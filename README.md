@@ -1,4 +1,4 @@
-_# did-resolution-test-suite
+# did-resolution-test-suite
 _test suite for DID resolver_
 
 ## HTML reports
@@ -30,18 +30,39 @@ To run the test and create the reports:
 npm run test
 ```
 
-`npm run test` executes `npm run cypress:run || npm run posttest`. `npm run cypress:run` 
-runs Cypress tests to completion. By default, cypress run will run 
+`npm run test` executes `npm run cypress:run || npm run posttest`. `npm run cypress:run`
+runs Cypress tests to completion. By default, cypress run will run
 all tests headlessly. With `npm run posttest` reports for each single spec are created and combined. The
-single reports for each spec are stored in `cypress/reports/mocha`. The combined report, including all specs, 
-can be found in `cypress/reports/mochareports` which is stored as both a `.json` file and an `.html` file. 
-In addition to these command, `clean:reports` is run each 
-time `npm run test` is executed. This command deletes all old results and reports from 
+single reports for each spec are stored in `cypress/reports/mocha`. The combined report, including all specs,
+can be found in `cypress/reports/mochareports` which is stored as both a `.json` file and an `.html` file.
+In addition to these command, `clean:reports` is run each
+time `npm run test` is executed. This command deletes all old results and reports from
 the `cypress/reports` directory before new reports are created.
 
-### Where to find the test reports
-The results will be stored in a local folder _/cypress/reports/mocha_. 
-Test results in this folder contain the result of each spec in a json format. 
-A merged or combined result of all specs can be found in the local folder 
-_/cypress/reports/mochareports_. A combined result is stored in both a json file and an HTML file._ 
+### Run single specs 
+A single spec can also be executed with the following: 
 
+```markdown
+npm run test -- --spec <<path_to_spec>>
+```
+
+e.g to run the resolver spec:
+
+```markdown
+npm run test -- --spec "cypress/integration/resolver_spec.js"
+```
+
+
+### Test different endpoints
+All specs are run with endpoint: `https://api.godiddy.com/0.1.0/universal-resolver/identifiers/` by default. Other endpoints can 
+be tested by passing in endpoint in the `endpoint` environment variable in the command line: 
+
+```markdown
+npm run test -- --env endpoint=<<ENDPOINT>>
+```
+
+### Where to find the test reports
+The results will be stored in a local folder `cypress/reports/mocha`.
+Test results in this folder contain the result of each spec in a json format.
+A merged or combined result of all specs can be found in the local folder
+`cypress/reports/mochareports`. A combined result is stored in both a json file and an HTML file.
