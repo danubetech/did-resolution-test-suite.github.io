@@ -14,9 +14,13 @@ ls -l "$PWD/gh-pages/"
 echo "reports folder"
 ls -l "$REPORT_FOLDER"
 
+echo "Add Link to main page"
+sed -i "1s/^/[$DATE_WITH_TIME](https://danubetech.github.io/did-resolution-test-suite/gh-pages/$DATE_WITH_TIME/mochareports/reports.html)\n/" index.md
+
 echo "Push result file to repo"
 git config --global user.email "admin@danubetech.com"
 git config --global user.name "Did Resolution tests"
 git add "$REPORT_FOLDER"
+git add index.md
 git commit -m "$DATE_WITH_TIME Did Resolution test report"
 git push origin main:gh-pages
