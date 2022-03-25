@@ -16,7 +16,7 @@ describe("Test Scenario 2b: CBOR DID document: " + endpoint, () => {
 });
 
 describe("Test Scenario 8: Service and relativeRef parameters", () => {
-  it("MUST return HTTP response status 303", () => {
+  it("Fetches DID", () => {
     cy.request({
       method: "GET",
       url:
@@ -26,7 +26,7 @@ describe("Test Scenario 8: Service and relativeRef parameters", () => {
       failOnStatusCode: false,
     }).as("response");
 
-    it("MUST return HTTP response status equals 300", () => {
+    it("MUST return HTTP response status equals 303", () => {
       cy.get("@response").then((response) => {
         expect(response.status).to.eq(303);
       });
