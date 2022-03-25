@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 echo "Created following report:"
 ls -l "$PWD/reports/mochareports/"
 
@@ -20,7 +22,9 @@ echo "reports folder"
 ls -l "$REPORT_FOLDER"
 
 echo "Add Link to main page"
-sed -i "1s/^/[$DATE_WITH_TIME](https://danubetech.github.io/did-resolution-test-suite/gh-pages/$DATE_WITH_TIME/mochareports/reports.html)\n/" index.md
+sed --version
+sed -i "1s|^|[$DATE_WITH_TIME](https://danubetech.github.io/did-resolution-test-suite/gh-pages/$DATE_WITH_TIME/mochareports/reports.html)\n|" "$PWD/index.md"
+cat "$PWD/index.md"
 
 echo "Push result file to repo"
 git config --global user.email "admin@danubetech.com"
