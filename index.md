@@ -1,3 +1,4 @@
+[2022-03-25_10:24:41](https://danubetech.github.io/did-resolution-test-suite/gh-pages/2022-03-25_10:24:41/mochareports/reports.html)
 ## HTML reports
 
 This page shows the results of several API tests. The following endpoints are tested:
