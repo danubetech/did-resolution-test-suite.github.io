@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -x
-
 echo "Created following report:"
 ls -l "$PWD/reports/mochareports/"
 
@@ -21,6 +19,7 @@ ls -l "$PWD/gh-pages/"
 echo "reports folder"
 ls -l "$REPORT_FOLDER"
 
+set -x
 printf "\n"
 echo "Add Link to main page"
 printf "\n"
@@ -28,13 +27,17 @@ ls -l "$PWD"
 printf "\n"
 sed -i "1s|^|[$DATE_WITH_TIME](https://danubetech.github.io/did-resolution-test-suite/gh-pages/$DATE_WITH_TIME/mochareports/reports.html)\n|" "$PWD/index.md"
 printf "\n"
+echo "cat index.md"
 cat "$PWD/index.md"
+printf "\n"
+echo "cat package.json"
+cat "$PWD/package.json"
 printf "\n"
 
 echo "Push result file to repo"
 git config --global user.email "admin@danubetech.com"
 git config --global user.name "Did Resolution tests"
 git add "$REPORT_FOLDER"
-git add index.md
+git add "$PWD/index.md"
 git commit -m "$DATE_WITH_TIME Did Resolution test report"
 git push origin gh-pages:gh-pages
