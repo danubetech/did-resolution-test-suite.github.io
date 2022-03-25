@@ -22,7 +22,7 @@ echo "reports folder"
 ls -l "$REPORT_FOLDER"
 
 echo "Add Link to main page"
-sed --version
+ls -l "$PWD"
 sed -i "1s|^|[$DATE_WITH_TIME](https://danubetech.github.io/did-resolution-test-suite/gh-pages/$DATE_WITH_TIME/mochareports/reports.html)\n|" "$PWD/index.md"
 cat "$PWD/index.md"
 
