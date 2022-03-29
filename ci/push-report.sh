@@ -5,7 +5,7 @@ ls -l "$PWD/reports/mochareports/"
 
 echo "Switch to gh-pages branch"
 git fetch
-git switch gh-pages
+git switch gh-pages --force
 git status
 
 echo "Save tests to folder"
