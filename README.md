@@ -74,14 +74,25 @@ Tests can be switched off and on by the usage of environment variables. By defau
 the environment variables of specific tests have to be swtichd off. This can be done by setting the environment variable to `false`. See below for a list of environment variables:
 
 ````markdown 
-"TEST_200"            runs a test with a normal DID
-"TEST_200JLD"         runs a test with a normal DID including a header
-"TEST_406"            runs a test with an unsupported DID
-"TEST_410"            runs a test with a deactivated DID
-"TEST_404"            runs a test with a DID that is not found
-"TEST_400"            runs a test with an invalid DID
-"TEST_200F"           runs a test with a DID with a fragment
+"TEST_200"              runs a test with a normal DID
+"TEST_200_JLD"          runs a test with a normal DID including a header
+"TEST_200_CBOR"         runs a test with a normal DID containing CBOR DID document
+"TEST_200_F"            runs a test with a DID with a fragment
+"TEST_406"              runs a test with an unsupported DID
+"TEST_410"              runs a test with a deactivated DID
+"TEST_404"              runs a test with a DID that is not found
+"TEST_400"              runs a test with an invalid DID
+"TEST_200_RP"           runs a test with a DID containing a relative parameter  
+"TEST_200_TK"           runs a test with a DID containing a transformKey                 
+"TEST_200_VT"           runs a test with a DID containing the versionTime 
+"TEST_200_VI"           runs a test with a DID containing the versionID
+"TEST_200_DURL"         runs a test with a DID containing a dereference a DID URL*
+"TEST_200_DRURL"        runs a test with a DID containing a dereference a DID URL**
 ````
+
+`*:` containing the following header: `Accept: application/json`
+
+`**:` containing the following header: `Accept: application/ld+json;profile="https://w3c-ccg.github.io/did-resolution/`
 
 E.g. to skip the first test:
 
