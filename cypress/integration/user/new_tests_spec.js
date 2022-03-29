@@ -1,5 +1,3 @@
-// const { softExpect } = chai;
-
 const endpoint = Cypress.env("ENDPOINT");
 
 describe("Test Scenario 2b: CBOR DID document: " + endpoint, () => {
@@ -61,7 +59,7 @@ describe("Test Scenario 9: DID URLs with transformKeys", () => {
     });
   });
 
-  it("MUST return property verificationMethod of type JsonWebKey2020", () => {
+  it.only("MUST return property verificationMethod of type JsonWebKey2020", () => {
     cy.request({
       method: "GET",
       url:
@@ -70,11 +68,9 @@ describe("Test Scenario 9: DID URLs with transformKeys", () => {
       headers: { Accept: "application/did+ld+json" },
       failOnStatusCode: false,
     }).then((response) => {
-      // todo alle verificationMethods testen (nicht nur [0] im loop)
-      expect(response.body.verificationMethod[0]).has.property(
-        "type",
-        "JsonWebKey2020"
-      );
+      response.body.verificationMethod.forEach((out) => {
+        expect(out).has.property("type", "JsonWebKey2020");
+      });
     });
   });
 

@@ -1,4 +1,3 @@
-// todo: ab hier ist nur unsere eigenes software
 describe("Test Scenario 13: Retrieve configuration properties", () => {
   it("MUST return HTTP response status 200", () => {
     cy.request({
