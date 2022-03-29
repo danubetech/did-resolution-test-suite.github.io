@@ -7,6 +7,8 @@ This repository runs API tests for the following endpoints:
 - `https://dev.uniresolver.io/1.0/identifiers/`
 - `https://resolver.svip.danubetech.com/1.0/identifiers/`
 - `https://api.godiddy.com/0.1.0/universal-resolver/identifiers/`
+- `https://api.godiddy.dev.com/0.1.0/universal-resolver/identifiers/`
+
 
 <!-- In the current version of this repository, the report of https://dev.uniresolver.io/1.0/identifiers/ is shown.  -->
 
@@ -49,8 +51,11 @@ npm run test -- --spec <<path_to_spec>>
 E.g. to run the resolver spec:
 
 ```markdown
-npm run test -- --spec "cypress/integration/resolver_spec.js"
+npm run test -- --spec "cypress/integration/user/resolver_spec.js"
 ```
+
+TODO: write about user vs admin 
+TODO: 'specs can be found in the intergration folder, there are two folders...'
 
 #### Run specific tests
 
