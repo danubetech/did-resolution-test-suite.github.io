@@ -59,7 +59,7 @@ describe("Test Scenario 9: DID URLs with transformKeys", () => {
     });
   });
 
-  it.only("MUST return property verificationMethod of type JsonWebKey2020", () => {
+  it("MUST return property verificationMethod of type JsonWebKey2020", () => {
     cy.request({
       method: "GET",
       url:
@@ -83,9 +83,7 @@ describe("Test Scenario 9: DID URLs with transformKeys", () => {
       headers: { Accept: "application/did+ld+json" },
       failOnStatusCode: false,
     }).then((response) => {
-      // todo nur substring anschauen application/did+ld+json, charset ist nicht so wiechtig kann ändern aber profile schon
-      expect(response.headers).has.property(
-        "content-type",
+      expect(response.headers["content-type"]).contains(
         "application/did+ld+json"
       );
     });
@@ -132,7 +130,7 @@ describe("Test Scenario 10: DID URLs with versionTime parameter", () => {
       headers: { Accept: "application/did+ld+json" },
       failOnStatusCode: false,
     }).then((response) => {
-      expect(response.headers["content-type"]).to.contain(
+      expect(response.headers["content-type"]).contains(
         "application/did+ld+json"
       );
     });
@@ -179,10 +177,23 @@ describe("Test Scenario 10: DID URLs with versionTime parameter", () => {
       );
     });
   });
+});
 
+describe.only("tests something", () => {
   //todo: ob DID document anderes DID document wenn mann es ohne version ID
   // did:sov:DjxRxnL4gXsncbH8jM8ySM?versionTime=2018-12-10T02:22:49Z v.s.
   // did:sov:DjxRxnL4gXsncbH8jM8ySM
+
+  it("MUST return HTTP response status 200", () => {
+    cy.request({
+      method: "GET",
+      url: endpoint + "did:sov:DjxRxnL4gXsncbH8jM8ySM?versionId=105",
+      headers: { Accept: "application/did+ld+json" },
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+    });
+  });
 });
 
 describe("Test Scenario 11: DID URLs with versionId parameter", () => {
@@ -230,7 +241,7 @@ describe("Test Scenario 11: DID URLs with versionId parameter", () => {
       headers: { Accept: "application/did+ld+json;charset=utf-8" },
       failOnStatusCode: false,
     }).then((response) => {
-      expect(response.headers["content-type"]).to.contain(
+      expect(response.headers["content-type"]).contains(
         "application/did+ld+json"
       );
     });
@@ -270,12 +281,12 @@ describe("Test Scenario 12: Resolve a DID / dereference a DID URL", () => {
       headers: { Accept: "application/json" },
       failOnStatusCode: false,
     }).then((response) => {
-      expect(response.headers).has.property(
-        "content-type",
+      expect(response.headers["content-type"]).contains(
         "application/did+json;charset=utf-8"
       );
     });
   });
+
   it("MUST contain property id", () => {
     cy.request({
       method: "GET",
@@ -355,8 +366,7 @@ describe("Test Scenario 12B: Resolve a DID / dereference a DID URL", () => {
       },
       failOnStatusCode: false,
     }).then((response) => {
-      expect(response.headers).has.property(
-        "content-type",
+      expect(response.headers["content-type"]).contains(
         'application/ld+json; profile="https://w3c-ccg.github.io/did-resolution/"'
       );
     });
