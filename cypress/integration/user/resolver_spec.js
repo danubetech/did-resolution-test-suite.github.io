@@ -26,7 +26,7 @@ if (Cypress.env("TEST_200") == true) {
       //todo soft assertions
       it('Should have header with Content-Type with value application/ld+json;profile="https://w3id.org/did-resolution" ', () => {
         cy.get("@request").then((response) => {
-          expect(response.headers["content-type"].trim()).contains(
+          expect(response.headers["content-type"].replace(/\s+/g, "")).contains(
             'application/ld+json;profile="https://w3id.org/did-resolution'
           );
         });
@@ -606,32 +606,6 @@ if (Cypress.env("TEST_200_DURL") == true) {
       }).then((response) => {
         expect(response.body).has.property(
           "id",
-          "did:sov:builder:VbPQNHsvoLZdaNU7fTBeFx"
-        );
-      });
-    });
-
-    it("MUST contain property authentication", () => {
-      cy.request({
-        method: "GET",
-        url: endpoint + "did:sov:builder:VbPQNHsvoLZdaNU7fTBeFx",
-        headers: { Accept: "application/json" },
-        failOnStatusCode: false,
-      }).then((response) => {
-        expect(response.body["authentication"][0]).to.contain(
-          "did:sov:builder:VbPQNHsvoLZdaNU7fTBeFx"
-        );
-      });
-    });
-
-    it("MUST contain property assertionMethod", () => {
-      cy.request({
-        method: "GET",
-        url: endpoint + "did:sov:builder:VbPQNHsvoLZdaNU7fTBeFx",
-        headers: { Accept: "application/json" },
-        failOnStatusCode: false,
-      }).then((response) => {
-        expect(response.body["assertionMethod"][0]).to.contain(
           "did:sov:builder:VbPQNHsvoLZdaNU7fTBeFx"
         );
       });
