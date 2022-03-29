@@ -32,17 +32,17 @@ To run the test and create the reports:
 npm run test
 ```
 
-`npm run test` executes `npm run cypress:run || npm run posttest`. `npm run cypress:run`
-runs Cypress tests to completion. By default, cypress run will run
-all tests headlessly. With `npm run posttest` reports for each single spec are created and combined. The
+`npm run test` executes all test specs in the `cypress/integration/` folder, it creates test results and stores those test results in the 
+`cypress/reports` folder. `npm run test` executes both `npm run cypress:run` and `npm run posttest` in order to do so. 
+`npm run cypress:run` runs Cypress tests to completion. By default, cypress run will run
+all tests headlessly. By executing `npm run posttest`, reports for each single spec are created and combined. The
 single reports for each spec are stored in `cypress/reports/mocha`. The combined report, including all specs,
 can be found in `cypress/reports/mochareports` which is stored as both a `.json` file and an `.html` file.
-In addition to these command, `clean:reports` is run each
-time `npm run test` is executed. This command deletes all old results and reports from
+In addition to these command, `clean:reports` is run each time `npm run test` is executed. This command deletes all previous results and reports from
 the `cypress/reports` directory before new reports are created.
 
 ### Run single specs
-A single spec can also be executed with the following:
+A single spec can also be executed with the following command:
 
 ```markdown
 npm run test -- --spec <<path_to_spec>>
@@ -54,8 +54,19 @@ E.g. to run the resolver spec:
 npm run test -- --spec "cypress/integration/user/resolver_spec.js"
 ```
 
-TODO: write about user vs admin 
-TODO: 'specs can be found in the intergration folder, there are two folders...'
+In order to run a group of tests: 
+
+```markdown
+npm run test -- --spec "cypress/integration/user/*"
+```
+
+to run all specs in the user folder and: 
+
+```markdown
+npm run test -- --spec "cypress/integration/admin/*"
+```
+
+to run all tests in the admin folder.
 
 #### Run specific tests
 
