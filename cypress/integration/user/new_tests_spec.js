@@ -179,28 +179,43 @@ describe("Test Scenario 10: DID URLs with versionTime parameter", () => {
   });
 });
 
-describe.only("tests something", () => {
+describe.skip("Test difference between normal DID and DID with version ID", function () {
   //todo: ob DID document anderes DID document wenn mann es ohne version ID
   // did:sov:DjxRxnL4gXsncbH8jM8ySM?versionTime=2018-12-10T02:22:49Z v.s.
   // did:sov:DjxRxnL4gXsncbH8jM8ySM
+  // also do this for version ID
 
-  it("MUST return HTTP response status 200", () => {
-    cy.request({
-      method: "GET",
-      url: endpoint + "did:sov:DjxRxnL4gXsncbH8jM8ySM?versionId=105",
-      headers: { Accept: "application/did+ld+json" },
-      failOnStatusCode: false,
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-    });
+  // What exactly should be different here?
+
+  it("MUST contain property id with value ", () => {
+    function getDid() {
+      cy.request({
+        method: "GET",
+        url: endpoint + "did:sov:DjxRxnL4gXsncbH8jM8ySM",
+      }).then((response) => {
+        const methods = response.body;
+        cy.wrap(methods).as("normalDid");
+      });
+    }
+    function getVersionIdDid() {
+      cy.request({
+        method: "GET",
+        url:
+          endpoint +
+          "did:sov:DjxRxnL4gXsncbH8jM8ySM?versionTime=2018-12-10T02:22:49Z",
+      }).then((response) => {
+        const methods = response.body;
+        cy.wrap(methods).as("VersionIdDid");
+      });
+    }
+
+    getVersionIdDid();
+    getDid();
+    cy.get("@normalDid");
   });
 });
 
 describe("Test Scenario 11: DID URLs with versionId parameter", () => {
-  //todo: ob DID document anderes DID document gibt wenn mann es ohne version ID
-  // did:sov:DjxRxnL4gXsncbH8jM8ySM?versionTime=2018-12-10T02:22:49Z v.s.
-  // did:sov:DjxRxnL4gXsncbH8jM8ySM
-
   it("MUST return HTTP response status 200", () => {
     cy.request({
       method: "GET",
