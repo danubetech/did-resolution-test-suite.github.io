@@ -27,5 +27,5 @@ git commit -m "$DATE_WITH_TIME Did Resolution test report"
 git push origin gh-pages:gh-pages
 
 echo "Set link as env variable"
-echo "::set-output name=link::$LINK"
+echo "::set-env name=link::$LINK"
 echo "$LINK"
