@@ -27,5 +27,4 @@ git commit -m "$DATE_WITH_TIME Did Resolution test report"
 git push origin gh-pages:gh-pages
 
 echo "Set link as env variable"
-echo "report_link=$REPORT_LINK" >> "$GITHUB_ENV"
-echo "$REPORT_LINK"
+echo "date_with_time=$DATE_WITH_TIME" >> "$GITHUB_ENV"
