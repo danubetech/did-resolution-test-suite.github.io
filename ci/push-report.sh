@@ -15,7 +15,8 @@ mkdir "$REPORT_FOLDER"
 cp -r "$PWD/reports/." "$REPORT_FOLDER"
 
 echo "Add Link to main page"
-sed -i "1s|^|[$DATE_WITH_TIME](https://danubetech.github.io/did-resolution-test-suite/gh-pages/$DATE_WITH_TIME/mochareports/reports.html)  \n|" "$PWD/index.md"
+export LINK="https://danubetech.github.io/did-resolution-test-suite/gh-pages/$DATE_WITH_TIME/mochareports/reports.html"
+sed -i "1s|^|[$DATE_WITH_TIME]($LINK)  \n|" "$PWD/index.md"
 
 echo "Push result file to repo"
 git config --global user.email "admin@danubetech.com"
@@ -24,3 +25,6 @@ git add "$REPORT_FOLDER"
 git add "$PWD/index.md"
 git commit -m "$DATE_WITH_TIME Did Resolution test report"
 git push origin gh-pages:gh-pages
+
+echo "Set link as env variable"
+echo "::set-output name=link::$LINK"
