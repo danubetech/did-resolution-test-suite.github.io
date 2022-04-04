@@ -28,3 +28,4 @@ git push origin gh-pages:gh-pages
 
 echo "Set link as env variable"
 echo "::set-output name=link::$LINK"
+echo "$LINK"
