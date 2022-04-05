@@ -8,6 +8,13 @@ if (process.env.ENDPOINT === undefined) {
     runOptions.env.ENDPOINT = process.env.ENDPOINT
 }
 
+if (process.env.SPEC === undefined) {
+    console.log(`Running all tests`)
+} else {
+    console.log(`Running test: ${process.env.SPEC}`)
+    runOptions.spec = process.env.SPEC
+}
+
 // Override exit code to avoid CI interruption
 cypress.run(runOptions).then(result => {
     process.exit(0)
