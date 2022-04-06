@@ -41,29 +41,37 @@ can be found in `cypress/reports/mochareports` which is stored as both a `.json`
 In addition to these command, `clean:reports` is run each time `npm run test` is executed. This command deletes all previous results and reports from
 the `cypress/reports` directory before new reports are created.
 
+### Test different endpoints
+All specs are run with endpoint: `https://api.godiddy.com/0.1.0/universal-resolver/identifiers/` by default. Other endpoints can
+be tested by passing in endpoint in the `ENDPOINT` environment variable in the command line:
+
+```markdown
+ENDPOINT=<<ENDPOINT>> npm test
+```
+
 ### Run single specs
 A single spec can also be executed with the following command:
 
 ```markdown
-npm run test -- --spec <<path_to_spec>>
+SPEC=<<path_to_spec>> npm test
 ```
 
 E.g. to run the resolver spec:
 
 ```markdown
-npm run test -- --spec "cypress/integration/user/resolver_spec.js"
+SPEC=cypress/integration/user/resolver_spec.js npm test
 ```
 
 In order to run a group of tests: 
 
 ```markdown
-npm run test -- --spec "cypress/integration/user/*"
+SPEC=cypress/integration/user/* npm test
 ```
 
 to run all specs in the user folder and: 
 
 ```markdown
-npm run test -- --spec "cypress/integration/admin/*"
+SPEC=cypress/integration/admin/* npm test
 ```
 
 to run all tests in the admin folder.
@@ -97,17 +105,9 @@ the environment variables of specific tests have to be swtichd off. This can be 
 E.g. to skip the first test:
 
 ```markdown
-npm run test -- --env TEST_200=false
+npx cypress run -- --env TEST_200=false
 ```
-
-
-### Test different endpoints
-All specs are run with endpoint: `https://api.godiddy.com/0.1.0/universal-resolver/identifiers/` by default. Other endpoints can
-be tested by passing in endpoint in the `ENDPOINT` environment variable in the command line:
-
-```markdown
-npm run test -- --env ENDPOINT=<<ENDPOINT>>
-```
+*Note:* This environment variables are not yet supported by `npm test`
 
 ### Where to find the test reports
 The results will be stored in a local folder _/cypress/reports/mocha_.
