@@ -105,8 +105,9 @@ the environment variables of specific tests have to be swtichd off. This can be 
 E.g. to skip the first test:
 
 ```markdown
-npm run test -- --env TEST_200=false
+npx cypress run -- --env TEST_200=false
 ```
+*Note:* This environment variables are not yet supported by `npm test`
 
 ### Where to find the test reports
 The results will be stored in a local folder _/cypress/reports/mocha_.
