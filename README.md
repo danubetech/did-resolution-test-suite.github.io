@@ -78,8 +78,13 @@ to run all tests in the admin folder.
 
 #### Run specific tests
 
-Tests can be switched off and on by the usage of environment variables. By default, all tests and all specs are run. In order to run subset of all tests,
-the environment variables of specific tests have to be swtichd off. This can be done by setting the environment variable to `false`. See below for a list of environment variables:
+To run the test-suite with a custom set of tests in a CI env, it's advised to edit the `env` section in the [config file](https://github.com/danubetech/did-resolution-test-suite/blob/main/cypress.json) for cypress.  
+
+Tests can also be switched off and on by the usage of environment variables. By default, all tests and all specs are run. In order to run a subset of all tests, the environment variables of specific tests have to be switched off. This can be done by setting the environment variable to `false`.  
+
+*Note:* This environment variables are not supported by `npm test` but can be used with `cypress` 
+
+See below for a list of environment variables:
 
 ````markdown 
 "TEST_200"              runs a test with a normal DID
@@ -106,8 +111,7 @@ E.g. to skip the first test:
 
 ```markdown
 npx cypress run -- --env TEST_200=false
-```
-*Note:* This environment variables are not yet supported by `npm test`
+``` 
 
 ### Where to find the test reports
 The results will be stored in a local folder _/cypress/reports/mocha_.
