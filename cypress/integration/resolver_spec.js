@@ -333,7 +333,7 @@ if (Cypress.env("TEST_200_F") == true) {
 }
 
 if (Cypress.env("TEST_200_RP") == true) {
-  describe.only("Test Scenario 8: Service and relativeRef parameters", () => {
+  describe("Test Scenario 8: Service and relativeRef parameters", () => {
     it("Fetches DID", () => {
       cy.request({
         method: "GET",
@@ -374,7 +374,6 @@ if (Cypress.env("TEST_200_TK") == true) {
         },
         failOnStatusCode: false,
       }).then((response) => {
-        console.log(response);
         expect(response.status).to.eq(200);
       });
     });
@@ -658,7 +657,6 @@ if (Cypress.env("TEST_200_DRURL") == true) {
         },
         failOnStatusCode: false,
       }).then((response) => {
-        console.log(response);
         expect(response.status).to.eq(200);
       });
     });

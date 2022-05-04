@@ -226,7 +226,6 @@ if (Cypress.env("TEST_200F") == true) {
             }).as("request");
 
             cy.get("@request").then((response) => {
-              console.log(response);
               expect(response.status).to.eq(200);
               expect(response.headers["content-type"]).to.contain(
                 "application/did+ld+json"
