@@ -125,6 +125,7 @@ if (Cypress.env("TEST_406") == true) {
   });
 }
 
+// todo: fix bug here
 if (Cypress.env("TEST_410") == true) {
   describe("Test Scenario 4: Deactivated", () => {
     it("Returns an HTTP code of 410 for deactivated DIDs", () => {
@@ -198,7 +199,7 @@ if (Cypress.env("TEST_400") == true) {
               expect(response.headers["content-type"]).to.contain(
                 'application/ld+json;profile="https://w3id.org/did-resolution"'
               );
-              expect(response.body.didResolutionMetadata.error).to.eq(
+              expect(response.body.didResolutionMetadata.error).contains(
                 "invalidDid"
               );
             });
@@ -251,14 +252,17 @@ if (Cypress.env("TEST_200_RP") == true) {
         .then((list) => {
           Object.keys(list).forEach((key) => {
             const fragmentDid = list[key];
+            console.log("FRAGMENT DID IS", fragmentDid);
             cy.request({
               method: "GET",
               url: endpoint + fragmentDid,
               headers: { Accept: "text/uri-list" },
               failOnStatusCode: false,
             }).as("response");
-            cy.get("@response").then((response) => {
-              expect(response.status).to.eq(303);
+            it("MUST return HTTP response status equals 303", () => {
+              cy.get("@response").then((response) => {
+                expect(response.status).to.eq(303);
+              });
             });
           });
         });
