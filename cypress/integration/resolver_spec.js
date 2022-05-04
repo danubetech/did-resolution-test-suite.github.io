@@ -359,7 +359,7 @@ if (Cypress.env("TEST_200_RP") == true) {
 
 //todo: gives error in GODIDDY &
 if (Cypress.env("TEST_200_TK") == true) {
-  describe.only("Test Scenario 9: DID URLs with transformKeys", () => {
+  describe("Test Scenario 9: DID URLs with transformKeys", () => {
     it("MUST return HTTP response status 200", () => {
       cy.request({
         method: "GET",
@@ -641,9 +641,9 @@ if (Cypress.env("TEST_200_DURL") == true) {
     });
   });
 }
-//todo: WHY IS THIS HEADER NOT ACCEPTED? IS THIS ONLY FOR GODIDDY?
+//todo: HEADER IS NOT ACCEPTED WHY?
 if (Cypress.env("TEST_200_DRURL") == true) {
-  describe("Test Scenario 12B: Resolve a DID / dereference a DID URL", () => {
+  describe.only("Test Scenario 12B: Resolve a DID / dereference a DID URL", () => {
     it("MUST return HTTP response status 200", () => {
       cy.request({
         method: "GET",
@@ -651,6 +651,7 @@ if (Cypress.env("TEST_200_DRURL") == true) {
         headers: {
           Accept:
             'application/ld+json;profile="https://w3c-ccg.github.io/did-resolution/"',
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
         },
         failOnStatusCode: false,
       }).then((response) => {
@@ -666,6 +667,7 @@ if (Cypress.env("TEST_200_DRURL") == true) {
         headers: {
           Accept:
             'application/ld+json;profile="https://w3c-ccg.github.io/did-resolution/"',
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
         },
         failOnStatusCode: false,
       }).then((response) => {
