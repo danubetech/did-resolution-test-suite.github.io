@@ -376,8 +376,7 @@ if (Cypress.env("TEST_200_VI") == true) {
               expect(response.headers["content-type"]).contains(
                 "application/did+ld+json"
               );
-              expect(response.body).has.property("id");
-              // .contains("did:sov:DjxRxnL4gXsncbH8jM8ySM");
+              expect(response.body).has.property("id").contains(versionIdDid);
             });
           });
         });

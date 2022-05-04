@@ -170,7 +170,7 @@ if (Cypress.env("TEST_410") == true) {
         method: "GET",
         url:
           endpoint +
-          "did:ion:test:EiCkgg9f7jPCwlALgUapUJgLI3UsS7cRAjENMjOpIvhMgg",
+          "did:kilt:4r6RdVMNes2eEobxyxH7aVsesUqR2X175sUAXJfo7dEWxHUS",
         failOnStatusCode: false,
       }).then((response) => {
         expect(response.body.didDocumentMetadata.deactivated).to.eq(true);
