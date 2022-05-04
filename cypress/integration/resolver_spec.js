@@ -23,7 +23,6 @@ if (Cypress.env("TEST_200") == true) {
         });
       });
 
-      //todo soft assertions
       it('Should have header with Content-Type with value application/ld+json;profile="https://w3id.org/did-resolution" ', () => {
         cy.get("@request").then((response) => {
           expect(response.headers["content-type"].replace(/\s+/g, "")).contains(
@@ -124,15 +123,14 @@ if (Cypress.env("TEST_406") == true) {
   });
 }
 
+// todo: ASK CIHAN WHEN HE IS BACK! WHAT DID TO USE HERE?
 if (Cypress.env("TEST_410") == true) {
   describe("Test Scenario 4: Deactivated", () => {
     // DEBUG doesn't return 410 but 404 or 200
     it("MUST return HTTP code 410", () => {
       cy.request({
         method: "GET",
-        url:
-          endpoint +
-          "did:ion:test:EiCkgg9f7jPCwlALgUapUJgLI3UsS7cRAjENMjOpIvhMgg",
+        url: endpoint + "",
         failOnStatusCode: false,
       }).then((response) => {
         expect(response.status).to.eq(410);
@@ -173,8 +171,7 @@ if (Cypress.env("TEST_410") == true) {
           "did:ion:test:EiCkgg9f7jPCwlALgUapUJgLI3UsS7cRAjENMjOpIvhMgg",
         failOnStatusCode: false,
       }).then((response) => {
-        console.log(response)
-        // expect(response.body.didDocumentMetadata.deactivated).to.eq(true);
+        expect(response.body.didDocumentMetadata.deactivated).to.eq(true);
       });
     });
   });
@@ -360,17 +357,22 @@ if (Cypress.env("TEST_200_RP") == true) {
   });
 }
 
+//todo: gives error in GODIDDY &
 if (Cypress.env("TEST_200_TK") == true) {
-  describe("Test Scenario 9: DID URLs with transformKeys", () => {
+  describe.only("Test Scenario 9: DID URLs with transformKeys", () => {
     it("MUST return HTTP response status 200", () => {
       cy.request({
         method: "GET",
         url:
           endpoint +
           "did:sov:WRfXPg8dantKVubE3HX8pw?transformKeys=JsonWebKey2020",
-        headers: { Accept: "application/did+ld+json" },
+        headers: {
+          Accept: "application/did+ld+json",
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
+        },
         failOnStatusCode: false,
       }).then((response) => {
+        console.log(response);
         expect(response.status).to.eq(200);
       });
     });
@@ -381,7 +383,10 @@ if (Cypress.env("TEST_200_TK") == true) {
         url:
           endpoint +
           "did:sov:WRfXPg8dantKVubE3HX8pw?transformKeys=JsonWebKey2020",
-        headers: { Accept: "application/did+ld+json" },
+        headers: {
+          Accept: "application/did+ld+json",
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
+        },
         failOnStatusCode: false,
       }).then((response) => {
         expect(response).to.be.a("object");
@@ -394,8 +399,10 @@ if (Cypress.env("TEST_200_TK") == true) {
         url:
           endpoint +
           "did:sov:WRfXPg8dantKVubE3HX8pw?transformKeys=JsonWebKey2020",
-        headers: { Accept: "application/did+ld+json" },
-        failOnStatusCode: false,
+        headers: {
+          Accept: "application/did+ld+json",
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
+        },
       }).then((response) => {
         response.body.verificationMethod.forEach((out) => {
           expect(out).has.property("type", "JsonWebKey2020");
@@ -409,7 +416,10 @@ if (Cypress.env("TEST_200_TK") == true) {
         url:
           endpoint +
           "did:sov:WRfXPg8dantKVubE3HX8pw?transformKeys=JsonWebKey2020",
-        headers: { Accept: "application/did+ld+json" },
+        headers: {
+          Accept: "application/did+ld+json",
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
+        },
         failOnStatusCode: false,
       }).then((response) => {
         expect(response.headers["content-type"]).contains(
@@ -424,7 +434,10 @@ if (Cypress.env("TEST_200_TK") == true) {
         url:
           endpoint +
           "did:sov:WRfXPg8dantKVubE3HX8pw?transformKeys=JsonWebKey2020",
-        headers: { Accept: "application/did+ld+json" },
+        headers: {
+          Accept: "application/did+ld+json",
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
+        },
         failOnStatusCode: false,
       }).then((response) => {
         expect(response.body).has.property(
@@ -628,6 +641,7 @@ if (Cypress.env("TEST_200_DURL") == true) {
     });
   });
 }
+//todo: WHY IS THIS HEADER NOT ACCEPTED? IS THIS ONLY FOR GODIDDY?
 if (Cypress.env("TEST_200_DRURL") == true) {
   describe("Test Scenario 12B: Resolve a DID / dereference a DID URL", () => {
     it("MUST return HTTP response status 200", () => {
@@ -640,6 +654,7 @@ if (Cypress.env("TEST_200_DRURL") == true) {
         },
         failOnStatusCode: false,
       }).then((response) => {
+        console.log(response);
         expect(response.status).to.eq(200);
       });
     });
