@@ -130,7 +130,9 @@ if (Cypress.env("TEST_410") == true) {
     it("MUST return HTTP code 410", () => {
       cy.request({
         method: "GET",
-        url: endpoint + "",
+        url:
+          endpoint +
+          "did:kilt:4r6RdVMNes2eEobxyxH7aVsesUqR2X175sUAXJfo7dEWxHUS",
         failOnStatusCode: false,
       }).then((response) => {
         expect(response.status).to.eq(410);
@@ -643,7 +645,7 @@ if (Cypress.env("TEST_200_DURL") == true) {
 }
 //todo: HEADER IS NOT ACCEPTED WHY?
 if (Cypress.env("TEST_200_DRURL") == true) {
-  describe.only("Test Scenario 12B: Resolve a DID / dereference a DID URL", () => {
+  describe("Test Scenario 12B: Resolve a DID / dereference a DID URL", () => {
     it("MUST return HTTP response status 200", () => {
       cy.request({
         method: "GET",
