@@ -66,7 +66,7 @@ if (Cypress.env("TEST_200_JLD") == true) {
                 "application/did+ld+json"
               );
               expect(response.body).not.to.have.property("didDocument");
-              expect(response.body).to.have.property("@context");
+              expect(response.body["id"]).to.contain(normalDid);
             });
           });
         });
@@ -234,9 +234,6 @@ if (Cypress.env("TEST_200_F") == true) {
                 "application/did+ld+json"
               );
               expect(response.body).not.to.have.property("didDocument");
-              expect(response.body).to.have.property("@context");
-              // todo: bug? doesn't work for all dids
-              // expect(response.body).to.have.property("type");
               expect(response.body).to.have.property("id");
               expect(response.body["id"]).to.contain(
                 decodeURIComponent(fragmentDid.split("#")[0])
