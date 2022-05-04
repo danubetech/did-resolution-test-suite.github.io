@@ -23,7 +23,6 @@ if (Cypress.env("TEST_200") == true) {
         });
       });
 
-      //todo soft assertions
       it('Should have header with Content-Type with value application/ld+json;profile="https://w3id.org/did-resolution" ', () => {
         cy.get("@request").then((response) => {
           expect(response.headers["content-type"].replace(/\s+/g, "")).contains(
@@ -124,8 +123,10 @@ if (Cypress.env("TEST_406") == true) {
   });
 }
 
+//todo: fix bug here, when Cihan is back!
 if (Cypress.env("TEST_410") == true) {
   describe("Test Scenario 4: Deactivated", () => {
+    // DEBUG doesn't return 410 but 404 or 200
     it("MUST return HTTP code 410", () => {
       cy.request({
         method: "GET",
@@ -163,6 +164,7 @@ if (Cypress.env("TEST_410") == true) {
         );
       });
     });
+    // DEBUG doesn't show didDocumentMetadata.deactivated
     it("JSON object MUST contain property didDocumentMetadata.deactivated = true", () => {
       cy.request({
         method: "GET",
@@ -357,6 +359,7 @@ if (Cypress.env("TEST_200_RP") == true) {
   });
 }
 
+//todo: gives error in GODIDDY
 if (Cypress.env("TEST_200_TK") == true) {
   describe("Test Scenario 9: DID URLs with transformKeys", () => {
     it("MUST return HTTP response status 200", () => {
@@ -365,7 +368,10 @@ if (Cypress.env("TEST_200_TK") == true) {
         url:
           endpoint +
           "did:sov:WRfXPg8dantKVubE3HX8pw?transformKeys=JsonWebKey2020",
-        headers: { Accept: "application/did+ld+json" },
+        headers: {
+          Accept: "application/did+ld+json",
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
+        },
         failOnStatusCode: false,
       }).then((response) => {
         expect(response.status).to.eq(200);
@@ -378,7 +384,10 @@ if (Cypress.env("TEST_200_TK") == true) {
         url:
           endpoint +
           "did:sov:WRfXPg8dantKVubE3HX8pw?transformKeys=JsonWebKey2020",
-        headers: { Accept: "application/did+ld+json" },
+        headers: {
+          Accept: "application/did+ld+json",
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
+        },
         failOnStatusCode: false,
       }).then((response) => {
         expect(response).to.be.a("object");
@@ -391,7 +400,10 @@ if (Cypress.env("TEST_200_TK") == true) {
         url:
           endpoint +
           "did:sov:WRfXPg8dantKVubE3HX8pw?transformKeys=JsonWebKey2020",
-        headers: { Accept: "application/did+ld+json" },
+        headers: {
+          Accept: "application/did+ld+json",
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
+        },
         failOnStatusCode: false,
       }).then((response) => {
         response.body.verificationMethod.forEach((out) => {
@@ -406,7 +418,10 @@ if (Cypress.env("TEST_200_TK") == true) {
         url:
           endpoint +
           "did:sov:WRfXPg8dantKVubE3HX8pw?transformKeys=JsonWebKey2020",
-        headers: { Accept: "application/did+ld+json" },
+        headers: {
+          Accept: "application/did+ld+json",
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
+        },
         failOnStatusCode: false,
       }).then((response) => {
         expect(response.headers["content-type"]).contains(
@@ -421,7 +436,10 @@ if (Cypress.env("TEST_200_TK") == true) {
         url:
           endpoint +
           "did:sov:WRfXPg8dantKVubE3HX8pw?transformKeys=JsonWebKey2020",
-        headers: { Accept: "application/did+ld+json" },
+        headers: {
+          Accept: "application/did+ld+json",
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
+        },
         failOnStatusCode: false,
       }).then((response) => {
         expect(response.body).has.property(
@@ -625,6 +643,7 @@ if (Cypress.env("TEST_200_DURL") == true) {
     });
   });
 }
+//todo: HEADER IS NOT ACCEPTED WHY?
 if (Cypress.env("TEST_200_DRURL") == true) {
   describe("Test Scenario 12B: Resolve a DID / dereference a DID URL", () => {
     it("MUST return HTTP response status 200", () => {
@@ -634,6 +653,7 @@ if (Cypress.env("TEST_200_DRURL") == true) {
         headers: {
           Accept:
             'application/ld+json;profile="https://w3c-ccg.github.io/did-resolution/"',
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
         },
         failOnStatusCode: false,
       }).then((response) => {
@@ -648,6 +668,7 @@ if (Cypress.env("TEST_200_DRURL") == true) {
         headers: {
           Accept:
             'application/ld+json;profile="https://w3c-ccg.github.io/did-resolution/"',
+          Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
         },
         failOnStatusCode: false,
       }).then((response) => {
