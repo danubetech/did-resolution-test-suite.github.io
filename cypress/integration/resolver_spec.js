@@ -405,6 +405,7 @@ if (Cypress.env("TEST_200_TK") == true) {
           Accept: "application/did+ld+json",
           Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
         },
+        failOnStatusCode: false,
       }).then((response) => {
         response.body.verificationMethod.forEach((out) => {
           expect(out).has.property("type", "JsonWebKey2020");
