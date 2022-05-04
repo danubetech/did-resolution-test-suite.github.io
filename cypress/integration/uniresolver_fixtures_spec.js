@@ -408,6 +408,7 @@ if (Cypress.env("TEST_200_DURL") == true) {
   });
 }
 
+//todo: HEADER IS NOT ACCEPTED WHY?
 if (Cypress.env("TEST_200_DRURL") == true) {
   describe("Test Scenario 12B: Resolve a DID / dereference a DID URL", () => {
     it("MUST return HTTP response status 200", () => {

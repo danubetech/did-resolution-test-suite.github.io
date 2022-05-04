@@ -123,7 +123,7 @@ if (Cypress.env("TEST_406") == true) {
   });
 }
 
-// todo: ASK CIHAN WHEN HE IS BACK! WHAT DID TO USE HERE?
+//todo: fix bug here, when Cihan is back!
 if (Cypress.env("TEST_410") == true) {
   describe("Test Scenario 4: Deactivated", () => {
     // DEBUG doesn't return 410 but 404 or 200
