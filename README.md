@@ -97,8 +97,6 @@ See below for a list of environment variables:
 "TEST_400"              runs a test with an invalid DID
 "TEST_200_RP"           runs a test with a DID containing a relative parameter  
 "TEST_200_TK"           runs a test with a DID containing a transformKey                 
-"TEST_200_VT"           runs a test with a DID containing the versionTime 
-"TEST_200_VI"           runs a test with a DID containing the versionID
 "TEST_200_DURL"         runs a test with a DID containing a dereference a DID URL*
 "TEST_200_DRURL"        runs a test with a DID containing a dereference a DID URL**
 ````
