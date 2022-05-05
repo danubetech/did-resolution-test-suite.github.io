@@ -66,11 +66,7 @@ if (Cypress.env("TEST_200_JLD") == true) {
                 "application/did+ld+json"
               );
               expect(response.body).not.to.have.property("didDocument");
-<<<<<<< HEAD
-              expect(response.body["id"]).to.contain(normalDid);
-=======
               expect(response.body).has.property("id").contains(normalDid);
->>>>>>> 3c0c7c4 (fix bugs)
             });
           });
         });
@@ -346,10 +342,6 @@ if (Cypress.env("TEST_200_VT") == true) {
                 "application/did+ld+json"
               );
               expect(response).to.be.a("object");
-<<<<<<< HEAD
-              expect(response.body).to.have.property("@context");
-=======
->>>>>>> 3c0c7c4 (fix bugs)
               expect(response.body)
                 .has.property("id")
                 .contains("did:sov:DjxRxnL4gXsncbH8jM8ySM");
@@ -385,13 +377,9 @@ if (Cypress.env("TEST_200_VI") == true) {
               expect(response.headers["content-type"]).contains(
                 "application/did+ld+json"
               );
-<<<<<<< HEAD
-              expect(response.body).has.property("id").contains(versionIdDid);
-=======
               expect(response.body)
                 .has.property("id")
                 .contains(decodeURIComponent(versionIdDid.split("?")[0]));
->>>>>>> 3c0c7c4 (fix bugs)
             });
           });
         });
