@@ -66,7 +66,11 @@ if (Cypress.env("TEST_200_JLD") == true) {
                 "application/did+ld+json"
               );
               expect(response.body).not.to.have.property("didDocument");
+<<<<<<< HEAD
               expect(response.body["id"]).to.contain(normalDid);
+=======
+              expect(response.body).has.property("id").contains(normalDid);
+>>>>>>> 3c0c7c4 (fix bugs)
             });
           });
         });
@@ -75,7 +79,7 @@ if (Cypress.env("TEST_200_JLD") == true) {
 }
 
 if (Cypress.env("TEST_200JLD") == true) {
-  describe("Test Scenario 2b: CBOR DID document: " + endpoint, () => {
+  describe.only("Test Scenario 2b: CBOR DID document: " + endpoint, () => {
     it("MUST return HTTP response status 200", () => {
       cy.fixture("../fixtures/example_dids.json")
         .its("normalDids")
@@ -94,7 +98,9 @@ if (Cypress.env("TEST_200JLD") == true) {
                 "application/did+ld+json"
               );
               expect(response.body).not.to.have.property("didDocument");
-              expect(response.body).to.have.property("@context");
+              expect(response.body).has.property("id").contains(normalDid);
+              // expect(response.body).to.have.property("@context");
+              //todo: change to id?
             });
           });
         });
@@ -252,6 +258,7 @@ if (Cypress.env("TEST_200_RP") == true) {
         .then((list) => {
           Object.keys(list).forEach((key) => {
             const fragmentDid = list[key];
+            console.log("FRAGMENT DID IS", fragmentDid);
             cy.request({
               method: "GET",
               url: endpoint + fragmentDid,
@@ -339,7 +346,10 @@ if (Cypress.env("TEST_200_VT") == true) {
                 "application/did+ld+json"
               );
               expect(response).to.be.a("object");
+<<<<<<< HEAD
               expect(response.body).to.have.property("@context");
+=======
+>>>>>>> 3c0c7c4 (fix bugs)
               expect(response.body)
                 .has.property("id")
                 .contains("did:sov:DjxRxnL4gXsncbH8jM8ySM");
@@ -372,11 +382,16 @@ if (Cypress.env("TEST_200_VI") == true) {
             cy.get("@request").then((response) => {
               expect(response.status).to.eq(200);
               expect(response).to.be.a("object");
-              expect(response.body).to.have.property("@context");
               expect(response.headers["content-type"]).contains(
                 "application/did+ld+json"
               );
+<<<<<<< HEAD
               expect(response.body).has.property("id").contains(versionIdDid);
+=======
+              expect(response.body)
+                .has.property("id")
+                .contains(decodeURIComponent(versionIdDid.split("?")[0]));
+>>>>>>> 3c0c7c4 (fix bugs)
             });
           });
         });
@@ -431,7 +446,7 @@ if (Cypress.env("TEST_200_DRURL") == true) {
               url: endpoint + normalDid,
               headers: {
                 Accept:
-                  'application/ld+json;profile="https://w3c-ccg.github.io/did-resolution/"',
+                  'application/ld+json;profile="https://w3id.org/did-resolution"',
               },
               failOnStatusCode: false,
             }).as("request");
@@ -440,8 +455,10 @@ if (Cypress.env("TEST_200_DRURL") == true) {
               console.log("normal did is:", normalDid);
 
               expect(response.status).to.eq(200);
-              expect(response.headers["content-type"]).contains(
-                'application/ld+json; profile="https://w3c-ccg.github.io/did-resolution/"'
+              expect(
+                response.headers["content-type"].replace(/\s+/g, "")
+              ).contains(
+                'application/ld+json;profile="https://w3id.org/did-resolution"'
               );
             });
           });

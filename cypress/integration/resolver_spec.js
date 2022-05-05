@@ -652,7 +652,7 @@ if (Cypress.env("TEST_200_DRURL") == true) {
         url: endpoint + "did:sov:builder:VbPQNHsvoLZdaNU7fTBeFx",
         headers: {
           Accept:
-            'application/ld+json;profile="https://w3c-ccg.github.io/did-resolution/"',
+            'application/ld+json;profile="https://w3id.org/did-resolution"',
           Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
         },
         failOnStatusCode: false,
@@ -667,13 +667,13 @@ if (Cypress.env("TEST_200_DRURL") == true) {
         url: endpoint + "did:sov:builder:VbPQNHsvoLZdaNU7fTBeFx",
         headers: {
           Accept:
-            'application/ld+json;profile="https://w3c-ccg.github.io/did-resolution/"',
+            'application/ld+json;profile="https://w3id.org/did-resolution"',
           Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
         },
         failOnStatusCode: false,
       }).then((response) => {
         expect(response.headers["content-type"]).contains(
-          'application/ld+json; profile="https://w3c-ccg.github.io/did-resolution/"'
+          'application/ld+json;profile="https://w3id.org/did-resolution"'
         );
       });
     });
