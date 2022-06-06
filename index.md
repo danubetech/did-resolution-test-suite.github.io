@@ -1,3 +1,4 @@
+[2022-06-06_00:28:55](https://danubetech.github.io/did-resolution-test-suite/gh-pages/2022-06-06_00:28:55/mochareports/reports.html)  
 [2022-06-05_00:36:31](https://danubetech.github.io/did-resolution-test-suite/gh-pages/2022-06-05_00:36:31/mochareports/reports.html)  
 [2022-06-04_00:34:05](https://danubetech.github.io/did-resolution-test-suite/gh-pages/2022-06-04_00:34:05/mochareports/reports.html)  
 [2022-06-03_00:26:36](https://danubetech.github.io/did-resolution-test-suite/gh-pages/2022-06-03_00:26:36/mochareports/reports.html)  
