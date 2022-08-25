@@ -1,7 +1,7 @@
 const endpoint = Cypress.env("ENDPOINT") + "identifiers/";
 
 if (Cypress.env("TEST_200") == true) {
-    describe(
+    describe.only(
         "Test Scenario 1: DID Resolution Result fixtures: " + endpoint,
         () => {
             it("A correct DID can be resolved", () => {
@@ -18,6 +18,7 @@ if (Cypress.env("TEST_200") == true) {
 
                             cy.get("@request").then((response) => {
                                 expect(response.status).to.eq(200);
+                                console.log(response)
                             });
 
                             cy.get("@request").then((response) => {
@@ -183,7 +184,7 @@ if (Cypress.env("TEST_404") == true) {
         });
     }
 
-if (Cypress.env("TEST_400") == true) {
+if (Cypress.env("TEST_400B") == true) {
     describe("Test Scenario 6A: Invalid DID", () => {
         it("Returns a HTTP code of 400 for an invalid DID", () => {
             cy.fixture("../fixtures/example_dids.json")
@@ -203,6 +204,7 @@ if (Cypress.env("TEST_400") == true) {
                             expect(response.body.didResolutionMetadata.error).contains(
                                 "invalidDid"
                             );
+                            // todo: modify
                             expect(response.statusText).to.eq("Bad Request")
                             console.log(response)
                         });
@@ -213,7 +215,7 @@ if (Cypress.env("TEST_400") == true) {
     }
 
 // todo: change env variable here
-if (Cypress.env("TEST_400") == true) {
+if (Cypress.env("TEST_400B") == true) {
     describe("Test Scenario 6B: method not supported DIDs", () => {
         it("Returns a HTTP code of 400 for an invalid DID", () => {
             cy.fixture("../fixtures/example_dids.json")
@@ -242,6 +244,54 @@ if (Cypress.env("TEST_400") == true) {
             });
         });
     }
+
+// todo: invalid verificationmethod.id
+if (Cypress.env("TEST_400B") == true) {
+    describe("Test Scenario 6C: method not supported DIDs", () => {
+        it("Returns a HTTP code of 400 for an invalid DID", () => {
+            cy.fixture("../fixtures/example_dids.json")
+                .its("invalidVerificationMethodId")
+                .then((list) => {
+                    Object.keys(list).forEach((key) => {
+                        const invalidDid = list[key];
+                        cy.request({
+                            method: "GET",
+                            url: endpoint + invalidDid,
+                            failOnStatusCode: false,
+                        }).then((response) => {
+                            // todo: should this be 404 or 400? was 400 before
+                            expect(response.status).to.eq(404);
+                        });
+                    });
+                });
+            });
+        });
+    }
+
+// todo: invalid verificationmethod.controller
+if (Cypress.env("TEST_400B") == true) {
+    describe("Test Scenario 6D: method not supported DIDs", () => {
+        it("Returns a HTTP code of 400 for an invalid DID", () => {
+            cy.fixture("../fixtures/example_dids.json")
+                .its("invalidVerificationMethodController")
+                .then((list) => {
+                    Object.keys(list).forEach((key) => {
+                        const invalidDid = list[key];
+                        cy.request({
+                            method: "GET",
+                            url: endpoint + invalidDid,
+                            failOnStatusCode: false,
+                        }).then((response) => {
+                            // todo: should this be 404 or 400? was 400 before
+                            expect(response.status).to.eq(404);
+                        });
+                    });
+                });
+            });
+        });
+    }
+
+
 
 if (Cypress.env("TEST_200_F") == true) {
     describe("Test Scenario 7: DID URLs with fragments", () => {
@@ -451,7 +501,6 @@ if (Cypress.env("TEST_200_DURL") == true) {
     });
 }
 
-//todo: HEADER IS NOT ACCEPTED WHY?
 if (Cypress.env("TEST_200_DRURL") == true) {
     describe("Test Scenario 12B: Resolve a DID / dereference a DID URL", () => {
         it("MUST return HTTP response status 200", () => {
