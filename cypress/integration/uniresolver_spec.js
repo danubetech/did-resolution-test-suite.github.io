@@ -184,14 +184,13 @@ if (Cypress.env("TEST_404") == true) {
     }
 
 if (Cypress.env("TEST_400") == true) {
-    describe("Test Scenario 6: Invalid DID", () => {
+    describe("Test Scenario 6A: Invalid DID", () => {
         it("Returns a HTTP code of 400 for an invalid DID", () => {
             cy.fixture("../fixtures/example_dids.json")
                 .its("invalidDids")
                 .then((list) => {
                     Object.keys(list).forEach((key) => {
                         const invalidDid = list[key];
-
                         cy.request({
                             method: "GET",
                             url: endpoint + invalidDid,
@@ -205,6 +204,7 @@ if (Cypress.env("TEST_400") == true) {
                                 "invalidDid"
                             );
                             expect(response.statusText).to.eq("Bad Request")
+                            console.log(response)
                         });
                     });
                 });
@@ -214,7 +214,7 @@ if (Cypress.env("TEST_400") == true) {
 
 // todo: change env variable here
 if (Cypress.env("TEST_400") == true) {
-    describe("Test Scenario 6: method not supported DIDs", () => {
+    describe("Test Scenario 6B: method not supported DIDs", () => {
         it("Returns a HTTP code of 400 for an invalid DID", () => {
             cy.fixture("../fixtures/example_dids.json")
                 .its("methodNotSupportedDids")
