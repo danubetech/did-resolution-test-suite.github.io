@@ -59,7 +59,7 @@ SPEC=<<path_to_spec>> npm test
 E.g. to run the resolver spec:
 
 ```markdown
-SPEC=cypress/integration/user/resolver_spec.js npm test
+SPEC=cypress/integration/user/resolver_spec_old.js npm test
 ```
 
 In order to run a group of tests: 
