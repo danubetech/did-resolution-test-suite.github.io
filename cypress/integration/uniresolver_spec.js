@@ -15,12 +15,9 @@ if (Cypress.env("TEST_200") == true) {
                             url: endpoint + normalDid,
                             failOnStatusCode: false,
                         }).as("request");
-
                         cy.get("@request").then((response) => {
                             expect(response.status).to.eq(200);
-                            console.log(response)
                         });
-
                         cy.get("@request").then((response) => {
                             expect(
                               response.headers["content-type"].replace(/\s+/g, "")
@@ -28,19 +25,15 @@ if (Cypress.env("TEST_200") == true) {
                               'application/ld+json;profile="https://w3id.org/did-resolution'
                             );
                         });
-
                         cy.get("@request").then((response) => {
                             expect(response.body).to.have.property("didDocument");
                         });
-
                         cy.get("@request").then((response) => {
                             expect(response.body).to.have.property("didResolutionMetadata");
                         });
-
                         cy.get("@request").then((response) => {
                             expect(response.body).to.have.property("didDocumentMetadata");
                         });
-
                         cy.get("@request").then((response) => {
                             expect(response.body.didDocument.id).to.be.a('string').and.satisfy(msg => msg.startsWith('did:'));                            });
                     });
@@ -184,7 +177,6 @@ if (Cypress.env("TEST_404") == true) {
     });
 }
 
-// todo: copy paste this for the other repo!
 if (Cypress.env("TEST_400A") == true) {
     describe.only("Test Scenario 6A: Invalid DID", () => {
         it("Returns a HTTP code of 400 for an invalid DID", () => {
@@ -205,7 +197,7 @@ if (Cypress.env("TEST_400A") == true) {
                           expect(response.body.didResolutionMetadata.error).contains(
                             "invalidDid"
                           );
-                          // todo: modify
+                          // todo: what is the assertion here?
                           expect(response.statusText).to.eq("Bad Request")
                       });
                   });
@@ -214,7 +206,6 @@ if (Cypress.env("TEST_400A") == true) {
     });
 }
 
-// todo: change env variable here
 if (Cypress.env("TEST_400B") == true) {
     describe.only("Test Scenario 6B: unsupported did method", () => {
         it("Returns an error for an unsupported did method", () => {
@@ -235,7 +226,7 @@ if (Cypress.env("TEST_400B") == true) {
                             'application/ld+json;profile="https://w3id.org/did-resolution"'
                           );
                           expect(response.body.didResolutionMetadata.error).to.eq("methodNotSupported");
-                          // // todo: is this the correct assertion?
+                          // todo: is this the correct assertion?
                       });
                   });
               });
@@ -257,7 +248,7 @@ if (Cypress.env("TEST_400C") == true) {
                           url: endpoint + invalidDid,
                           failOnStatusCode: false,
                       }).then((response) => {
-                          // todo: should this be 404 or 400? was 400 before
+                          // todo: what are the exact assertions here?
                           console.log(response)
                           expect(response.body.didResolutionMetadata.error).to.eq("invalidDidUrl");
                       });
@@ -281,7 +272,7 @@ if (Cypress.env("TEST_400D") == true) {
                           url: endpoint + invalidDid,
                           failOnStatusCode: false,
                       }).then((response) => {
-                          // todo: should return 404 or 400? was 400 before
+                          // todo: what are the exact assertions here?
                           expect(response.body.didResolutionMetadata.error).to.eq("invalidDidUrl");
                       });
                   });
@@ -300,7 +291,6 @@ if (Cypress.env("TEST_200_F") == true) {
               .then((list) => {
                   Object.keys(list).forEach((key) => {
                       const fragmentDid = list[key];
-
                       cy.request({
                           method: "GET",
                           url: endpoint + fragmentDid,
@@ -310,7 +300,6 @@ if (Cypress.env("TEST_200_F") == true) {
                               Authorization: "Bearer b082c420-df67-4b06-899c-b7c51d75fba0",
                           },
                       }).as("request");
-
                       cy.get("@request").then((response) => {
                           expect(response.status).to.eq(200);
                           expect(response.headers["content-type"]).to.contain(
@@ -371,7 +360,6 @@ if (Cypress.env("TEST_200_TK") == true) {
                           },
                           failOnStatusCode: false,
                       }).as("request");
-
                       cy.get("@request").then((response) => {
                           expect(response.status).to.eq(200);
                           expect(response).to.be.a("object");
@@ -476,7 +464,6 @@ if (Cypress.env("TEST_200_DURL") == true) {
               .then((list) => {
                   Object.keys(list).forEach((key) => {
                       const normalDid = list[key];
-
                       cy.request({
                           method: "GET",
                           url: endpoint + normalDid,
@@ -518,10 +505,8 @@ if (Cypress.env("TEST_200_DRURL") == true) {
                           },
                           failOnStatusCode: false,
                       }).as("request");
-
                       cy.get("@request").then((response) => {
                           console.log("normal did is:", normalDid);
-
                           expect(response.status).to.eq(200);
                           expect(response.headers["content-type"]).contains(
                             'application/ld+json; profile="https://w3c-ccg.github.io/did-resolution/"'
