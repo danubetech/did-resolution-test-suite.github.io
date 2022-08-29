@@ -244,7 +244,7 @@ if (Cypress.env("TEST_400B") == true) {
 }
 
 if (Cypress.env("TEST_400C") == true) {
-  describe.only("Test Scenario 6C: invalid verificationMethod.id", () => {
+  describe("Test Scenario 6C: invalid verificationMethod.id", () => {
     it("Raises error when verificationMethod.id is invalid", () => {
       // todo: pass in variable
       cy.fixture("../fixtures/example_dids.json")
@@ -276,11 +276,44 @@ if (Cypress.env("TEST_400C") == true) {
 }
 
 if (Cypress.env("TEST_400D") == true) {
-  describe.only("Test Scenario 6D: invalid verificationMethod.controller", () => {
+  describe("Test Scenario 6D: invalid verificationMethod.controller", () => {
     it("Raises error when verificationMethod.controller is invalid", () => {
       // todo: pass in variable
       cy.fixture("../fixtures/example_dids.json")
         .its("invalidVerificationMethodController")
+        .then((list) => {
+          Object.keys(list).forEach((key) => {
+            const invalidDid = list[key];
+            cy.request({
+              method: "GET",
+              url: endpoint + invalidDid,
+              failOnStatusCode: false,
+            }).then((response) => {
+              // todo: should this be 404 or 400? was 400 before
+              expect(response.status).to.eq(404);
+              expect(response.headers["content-type"]).to.contain(
+                'application/ld+json;profile="https://w3id.org/did-resolution"'
+              );
+              expect(response.body.didResolutionMetadata.error).contains(
+                "notFound"
+              );
+              // todo: is this the correct assertion?
+              expect(response.statusText).to.eq("Not Found");
+              console.log(response);
+            });
+          });
+        });
+    });
+  });
+}
+
+// todo: write!
+if (Cypress.env("TEST_400E") == true) {
+  describe.only("Test Scenario 6E: invalid didDocument.id", () => {
+    it("Raises error when didDocument.id is invalid", () => {
+      // todo: pass in variable
+      cy.fixture("../fixtures/example_dids.json")
+        .its("invalidDidDocumentId")
         .then((list) => {
           Object.keys(list).forEach((key) => {
             const invalidDid = list[key];
