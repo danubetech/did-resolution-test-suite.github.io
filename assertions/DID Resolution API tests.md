@@ -259,8 +259,6 @@ For all **"DIDs with invalid didDocument schemes"**:
 ???????
 
 
-
-
 ## Test Scenario 7: DID URLs with fragments
 
 For all **"DID URLs with fragments"**:
