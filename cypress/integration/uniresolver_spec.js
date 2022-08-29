@@ -1,9 +1,7 @@
 const endpoint = Cypress.env("ENDPOINT") + "identifiers/";
 
 // todo: remove this repo and merge to did-resolution-test-suite
-
-// todo: more descriptive names
-// todo: split groups of tests into files?
+// todo: more descriptive names or split groups of tests into files?
 if (Cypress.env("TEST_200") == true) {
   describe(
     "Test Scenario 1: DID Resolution Result fixtures: " + endpoint,
@@ -19,11 +17,10 @@ if (Cypress.env("TEST_200") == true) {
                 url: endpoint + normalDid,
                 failOnStatusCode: false,
               }).as("request");
-
               cy.get("@request").then((response) => {
                 expect(response.status).to.eq(200);
+                console.log(response);
               });
-
               cy.get("@request").then((response) => {
                 expect(
                   response.headers["content-type"].replace(/\s+/g, "")
@@ -31,19 +28,15 @@ if (Cypress.env("TEST_200") == true) {
                   'application/ld+json;profile="https://w3id.org/did-resolution'
                 );
               });
-
               cy.get("@request").then((response) => {
                 expect(response.body).to.have.property("didDocument");
               });
-
               cy.get("@request").then((response) => {
                 expect(response.body).to.have.property("didResolutionMetadata");
               });
-
               cy.get("@request").then((response) => {
                 expect(response.body).to.have.property("didDocumentMetadata");
               });
-
               cy.get("@request").then((response) => {
                 expect(response.body.didDocument.id)
                   .to.be.a("string")
@@ -190,7 +183,7 @@ if (Cypress.env("TEST_404") == true) {
   });
 }
 
-if (Cypress.env("TEST_400") == true) {
+if (Cypress.env("TEST_400A") == true) {
   describe("Test Scenario 6A: Invalid DID", () => {
     it("Returns a HTTP code of 400 for an invalid DID", () => {
       cy.fixture("../fixtures/example_dids.json")
@@ -218,13 +211,76 @@ if (Cypress.env("TEST_400") == true) {
   });
 }
 
-// todo: change env variable here
-if (Cypress.env("TEST_400") == true) {
-  describe.only("Test Scenario 6B: method not supported DIDs", () => {
-    it("Returns a HTTP code of 400 for an invalid DID", () => {
+if (Cypress.env("TEST_400B") == true) {
+  describe("Test Scenario 6B: method not supported DIDs", () => {
+    it("Raises an error for unsupported DID methods", () => {
       // todo: pass in variable
       cy.fixture("../fixtures/example_dids.json")
         .its("methodNotSupportedDids")
+        .then((list) => {
+          Object.keys(list).forEach((key) => {
+            const invalidDid = list[key];
+            cy.request({
+              method: "GET",
+              url: endpoint + invalidDid,
+              failOnStatusCode: false,
+            }).then((response) => {
+              // todo: should this be 404 or 400? was 400 before
+              expect(response.status).to.eq(404);
+              expect(response.headers["content-type"]).to.contain(
+                'application/ld+json;profile="https://w3id.org/did-resolution"'
+              );
+              expect(response.body.didResolutionMetadata.error).contains(
+                "notFound"
+              );
+              // todo: is this the correct assertion?
+              expect(response.statusText).to.eq("Not Found");
+              console.log(response);
+            });
+          });
+        });
+    });
+  });
+}
+
+if (Cypress.env("TEST_400C") == true) {
+  describe.only("Test Scenario 6C: invalid verificationMethod.id", () => {
+    it("Raises error when verificationMethod.id is invalid", () => {
+      // todo: pass in variable
+      cy.fixture("../fixtures/example_dids.json")
+        .its("invalidVerificationMethodId")
+        .then((list) => {
+          Object.keys(list).forEach((key) => {
+            const invalidDid = list[key];
+            cy.request({
+              method: "GET",
+              url: endpoint + invalidDid,
+              failOnStatusCode: false,
+            }).then((response) => {
+              // todo: should this be 404 or 400? was 400 before
+              expect(response.status).to.eq(404);
+              expect(response.headers["content-type"]).to.contain(
+                'application/ld+json;profile="https://w3id.org/did-resolution"'
+              );
+              expect(response.body.didResolutionMetadata.error).contains(
+                "notFound"
+              );
+              // todo: is this the correct assertion?
+              expect(response.statusText).to.eq("Not Found");
+              console.log(response);
+            });
+          });
+        });
+    });
+  });
+}
+
+if (Cypress.env("TEST_400D") == true) {
+  describe.only("Test Scenario 6D: invalid verificationMethod.controller", () => {
+    it("Raises error when verificationMethod.controller is invalid", () => {
+      // todo: pass in variable
+      cy.fixture("../fixtures/example_dids.json")
+        .its("invalidVerificationMethodController")
         .then((list) => {
           Object.keys(list).forEach((key) => {
             const invalidDid = list[key];
@@ -459,7 +515,7 @@ if (Cypress.env("TEST_200_DURL") == true) {
   });
 }
 
-//todo: HEADER IS NOT ACCEPTED WHY?
+// todo: header is not accepted?
 if (Cypress.env("TEST_200_DRURL") == true) {
   describe("Test Scenario 12B: Resolve a DID / dereference a DID URL", () => {
     it("MUST return HTTP response status 200", () => {
@@ -481,7 +537,6 @@ if (Cypress.env("TEST_200_DRURL") == true) {
 
             cy.get("@request").then((response) => {
               console.log("normal did is:", normalDid);
-
               expect(response.status).to.eq(200);
               expect(response.headers["content-type"]).contains(
                 'application/ld+json; profile="https://w3c-ccg.github.io/did-resolution/"'
