@@ -1,4 +1,5 @@
 const endpoint = Cypress.env("ENDPOINT") + "identifiers/";
+const path_example_dids = "../fixtures/example_dids.json";
 
 // todo: remove this repo and merge to did-resolution-test-suite
 // todo: more descriptive names or split groups of tests into files?
@@ -7,7 +8,7 @@ if (Cypress.env("TEST_200") == true) {
     "Test Scenario 1: DID Resolution Result fixtures: " + endpoint,
     () => {
       it("A correct DID can be resolved", () => {
-        cy.fixture("../fixtures/example_dids.json")
+        cy.fixture(path_example_dids)
           .its("normalDids")
           .then((list) => {
             Object.keys(list).forEach((key) => {
@@ -19,7 +20,6 @@ if (Cypress.env("TEST_200") == true) {
               }).as("request");
               cy.get("@request").then((response) => {
                 expect(response.status).to.eq(200);
-                console.log(response);
               });
               cy.get("@request").then((response) => {
                 expect(
@@ -27,6 +27,9 @@ if (Cypress.env("TEST_200") == true) {
                 ).contains(
                   'application/ld+json;profile="https://w3id.org/did-resolution'
                 );
+              });
+              cy.get("@request").then((response) => {
+                expect(response).to.be.a("object");
               });
               cy.get("@request").then((response) => {
                 expect(response.body).to.have.property("didDocument");
@@ -52,7 +55,7 @@ if (Cypress.env("TEST_200") == true) {
 if (Cypress.env("TEST_200_JLD") == true) {
   describe("Test Scenario 2: JSON-LD DID document", () => {
     it("A correct DID can be resolved with header input", () => {
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("normalDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -68,6 +71,9 @@ if (Cypress.env("TEST_200_JLD") == true) {
               expect(response.headers["content-type"]).to.contain(
                 "application/did+ld+json"
               );
+              cy.get("@request").then((response) => {
+                expect(response).to.be.a("object");
+              });
               expect(response.body).not.to.have.property("didDocument");
               expect(response.body["id"]).to.contain(normalDid);
             });
@@ -80,7 +86,7 @@ if (Cypress.env("TEST_200_JLD") == true) {
 if (Cypress.env("TEST_200JLD") == true) {
   describe("Test Scenario 2b: CBOR DID document: " + endpoint, () => {
     it("MUST return HTTP response status 200", () => {
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("normalDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -108,12 +114,11 @@ if (Cypress.env("TEST_200JLD") == true) {
 if (Cypress.env("TEST_406") == true) {
   describe("Test Scenario 3: Representation not supported", () => {
     it("Shows an error when a representation is prompted", () => {
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("normalDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
             const normalDid = list[key];
-
             cy.request({
               method: "GET",
               url: endpoint + normalDid,
@@ -121,6 +126,10 @@ if (Cypress.env("TEST_406") == true) {
               failOnStatusCode: false,
             }).then((response) => {
               expect(response.status).to.eq(406);
+              console.log(response);
+              expect(response.body.dereferencingMetadata.error).to.eq(
+                '"representationNotSupported"'
+              );
             });
           });
         });
@@ -131,7 +140,7 @@ if (Cypress.env("TEST_406") == true) {
 if (Cypress.env("TEST_410") == true) {
   describe("Test Scenario 4: Deactivated", () => {
     it("Returns an HTTP code of 410 for deactivated DIDs", () => {
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("deacDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -158,12 +167,11 @@ if (Cypress.env("TEST_410") == true) {
 if (Cypress.env("TEST_404") == true) {
   describe("Test Scenario 5: Not found", () => {
     it("Returns an HTTP code of 404 for non-existent DIDs", () => {
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("nonExisDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
             const nonExDid = list[key];
-
             cy.request({
               method: "GET",
               url: endpoint + nonExDid,
@@ -173,6 +181,7 @@ if (Cypress.env("TEST_404") == true) {
               expect(response.headers["content-type"]).to.contain(
                 'application/ld+json;profile="https://w3id.org/did-resolution"'
               );
+              expect(response).to.be.a("object");
               expect(response.body.didResolutionMetadata.error).to.eq(
                 "notFound"
               );
@@ -184,9 +193,9 @@ if (Cypress.env("TEST_404") == true) {
 }
 
 if (Cypress.env("TEST_400A") == true) {
-  describe("Test Scenario 6A: Invalid DID", () => {
+  describe.only("Test Scenario 6A: Invalid DID", () => {
     it("Returns a HTTP code of 400 for an invalid DID", () => {
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("invalidDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -200,10 +209,10 @@ if (Cypress.env("TEST_400A") == true) {
               expect(response.headers["content-type"]).to.contain(
                 'application/ld+json;profile="https://w3id.org/did-resolution"'
               );
+              expect(response).to.be.a("object");
               expect(response.body.didResolutionMetadata.error).contains(
                 "invalidDid"
               );
-              expect(response.statusText).to.eq("Bad Request");
             });
           });
         });
@@ -214,8 +223,7 @@ if (Cypress.env("TEST_400A") == true) {
 if (Cypress.env("TEST_400B") == true) {
   describe("Test Scenario 6B: method not supported DIDs", () => {
     it("Raises an error for unsupported DID methods", () => {
-      // todo: pass in variable
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("methodNotSupportedDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -225,17 +233,15 @@ if (Cypress.env("TEST_400B") == true) {
               url: endpoint + invalidDid,
               failOnStatusCode: false,
             }).then((response) => {
-              // todo: should this be 404 or 400? was 400 before
-              expect(response.status).to.eq(404);
+              // todo: should this be 404 or 400?
+              expect(response.status).to.eq(400);
               expect(response.headers["content-type"]).to.contain(
                 'application/ld+json;profile="https://w3id.org/did-resolution"'
               );
               expect(response.body.didResolutionMetadata.error).contains(
-                "notFound"
+                "methodNotSupported"
               );
-              // todo: is this the correct assertion?
-              expect(response.statusText).to.eq("Not Found");
-              console.log(response);
+              expect(response).to.be.a("object");
             });
           });
         });
@@ -246,8 +252,7 @@ if (Cypress.env("TEST_400B") == true) {
 if (Cypress.env("TEST_400C") == true) {
   describe("Test Scenario 6C: invalid verificationMethod.id", () => {
     it("Raises error when verificationMethod.id is invalid", () => {
-      // todo: pass in variable
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("invalidVerificationMethodId")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -257,17 +262,15 @@ if (Cypress.env("TEST_400C") == true) {
               url: endpoint + invalidDid,
               failOnStatusCode: false,
             }).then((response) => {
-              // todo: should this be 404 or 400? was 400 before
-              expect(response.status).to.eq(404);
+              // todo: should this be 404 or 400?
+              expect(response.status).to.eq(400);
               expect(response.headers["content-type"]).to.contain(
                 'application/ld+json;profile="https://w3id.org/did-resolution"'
               );
+              expect(response).to.be.a("object");
               expect(response.body.didResolutionMetadata.error).contains(
-                "notFound"
+                "invalidDidUrl"
               );
-              // todo: is this the correct assertion?
-              expect(response.statusText).to.eq("Not Found");
-              console.log(response);
             });
           });
         });
@@ -278,8 +281,7 @@ if (Cypress.env("TEST_400C") == true) {
 if (Cypress.env("TEST_400D") == true) {
   describe("Test Scenario 6D: invalid verificationMethod.controller", () => {
     it("Raises error when verificationMethod.controller is invalid", () => {
-      // todo: pass in variable
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("invalidVerificationMethodController")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -289,17 +291,14 @@ if (Cypress.env("TEST_400D") == true) {
               url: endpoint + invalidDid,
               failOnStatusCode: false,
             }).then((response) => {
-              // todo: should this be 404 or 400? was 400 before
-              expect(response.status).to.eq(404);
+              // todo: should this be 404 or 400?
+              expect(response.status).to.eq(400);
               expect(response.headers["content-type"]).to.contain(
                 'application/ld+json;profile="https://w3id.org/did-resolution"'
               );
               expect(response.body.didResolutionMetadata.error).contains(
-                "notFound"
+                "invalidDid"
               );
-              // todo: is this the correct assertion?
-              expect(response.statusText).to.eq("Not Found");
-              console.log(response);
             });
           });
         });
@@ -307,12 +306,11 @@ if (Cypress.env("TEST_400D") == true) {
   });
 }
 
-// todo: write!
 if (Cypress.env("TEST_400E") == true) {
   describe.only("Test Scenario 6E: invalid didDocument.id", () => {
     it("Raises error when didDocument.id is invalid", () => {
       // todo: pass in variable
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("invalidDidDocumentId")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -322,17 +320,14 @@ if (Cypress.env("TEST_400E") == true) {
               url: endpoint + invalidDid,
               failOnStatusCode: false,
             }).then((response) => {
-              // todo: should this be 404 or 400? was 400 before
-              expect(response.status).to.eq(404);
+              // todo: should this be 404 or 400?
+              expect(response.status).to.eq(400);
               expect(response.headers["content-type"]).to.contain(
                 'application/ld+json;profile="https://w3id.org/did-resolution"'
               );
               expect(response.body.didResolutionMetadata.error).contains(
-                "notFound"
+                "invalidDid"
               );
-              // todo: is this the correct assertion?
-              expect(response.statusText).to.eq("Not Found");
-              console.log(response);
             });
           });
         });
@@ -343,7 +338,7 @@ if (Cypress.env("TEST_400E") == true) {
 if (Cypress.env("TEST_200_F") == true) {
   describe("Test Scenario 7: DID URLs with fragments", () => {
     it("Can resolve a DID with a fragment", () => {
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("fragmentDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -378,7 +373,7 @@ if (Cypress.env("TEST_200_F") == true) {
 if (Cypress.env("TEST_200_RP") == true) {
   describe("Test Scenario 8: Service and relativeRef parameters", () => {
     it("Fetches DID", () => {
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("relativeParamDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -404,7 +399,7 @@ if (Cypress.env("TEST_200_RP") == true) {
 if (Cypress.env("TEST_200_TK") == true) {
   describe("Test Scenario 9: DID URLs with transformKeys", () => {
     it("MUST return HTTP response status 200", () => {
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("transformKeyDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -449,7 +444,7 @@ if (Cypress.env("TEST_200_TK") == true) {
 if (Cypress.env("TEST_200_VT") == true) {
   describe("Test Scenario 10: DID URLs with versionTime parameter", () => {
     it("MUST return HTTP response status 200", () => {
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("versionTimeDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -484,7 +479,7 @@ if (Cypress.env("TEST_200_VT") == true) {
 if (Cypress.env("TEST_200_VI") == true) {
   describe("Test Scenario 11: DID URLs with versionId parameter", () => {
     it("MUST return HTTP response status 200", () => {
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("versionIdDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -519,7 +514,7 @@ if (Cypress.env("TEST_200_VI") == true) {
 if (Cypress.env("TEST_200_DURL") == true) {
   describe("Test Scenario 12: Resolve a DID / dereference a DID URL", () => {
     it("MUST return HTTP response status 200", () => {
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("normalDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
@@ -552,7 +547,7 @@ if (Cypress.env("TEST_200_DURL") == true) {
 if (Cypress.env("TEST_200_DRURL") == true) {
   describe("Test Scenario 12B: Resolve a DID / dereference a DID URL", () => {
     it("MUST return HTTP response status 200", () => {
-      cy.fixture("../fixtures/example_dids.json")
+      cy.fixture(path_example_dids)
         .its("normalDids")
         .then((list) => {
           Object.keys(list).forEach((key) => {
