@@ -188,7 +188,7 @@ For all **"DIDs with invalid verificationMethod.id entries"**:
 
 **Input:**
 
-`curl -v -X GET 'https://dev.uniresolver.io/1.0/identifiers/did_to_be_defined'`
+`curl -v -X GET 'https://dev.uniresolver.io/1.0/identifiers/did_to_be_defined_with_invalid_verificationmeth_id'`
 
 **Tests:**
 
@@ -207,7 +207,7 @@ For all **"DIDs with invalid verificationMethod.controller entries"**:
 
 **Input:**
 
-`curl -v -X GET 'https://dev.uniresolver.io/1.0/identifiers/did_to_be_defined'`
+`curl -v -X GET 'https://dev.uniresolver.io/1.0/identifiers/did_to_be_defined_with_invalid_verificationmethod_controller'`
 
 **Tests:**
 
@@ -226,7 +226,7 @@ For all **"DIDs with invalid didDocument.id entries"**:
 
 **Input:**
 
-`curl -v -X GET 'https://dev.uniresolver.io/1.0/identifiers/did_to_be_defined'`
+`curl -v -X GET 'https://dev.uniresolver.io/1.0/identifiers/did_to_be_defined_with_invalid_diddocument_id'`
 
 **Tests:**
 
@@ -238,6 +238,27 @@ For all **"DIDs with invalid didDocument.id entries"**:
 - JSON object MUST contain property `didResolutionMetadata.error` = `"invalidDid"`
 
 ???????
+
+## Test Scenario 6F: Invalid didDocument scheme
+
+For all **"DIDs with invalid didDocument schemes"**:
+
+**Input:**
+
+`curl -v -X GET 'https://dev.uniresolver.io/1.0/identifiers/did_to_be_defined_with_scheme_error'`
+
+**Tests:**
+
+???????
+
+- MUST return HTTP code `400`
+- MUST return HTTP header `Content-Type` that contains `application/ld+json;profile="https://w3id.org/did-resolution"`
+- MUST return JSON object
+- JSON object MUST contain property `didResolutionMetadata.error` = `"invalidDid"`
+
+???????
+
+
 
 
 ## Test Scenario 7: DID URLs with fragments
