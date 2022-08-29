@@ -174,10 +174,12 @@ For all **"DIDs with unsupported did methods"**:
 **Tests:**
 
 ???????
+
 - MUST return HTTP code `400`
 - MUST return HTTP header `Content-Type` that contains `application/ld+json;profile="https://w3id.org/did-resolution"`
 - MUST return JSON object
 - JSON object MUST contain property `didResolutionMetadata.error` = `"methodNotSupported"`
+
 ???????
 
 ## Test Scenario 6C: Invalid verificationMethod.id entry
@@ -191,10 +193,12 @@ For all **"DIDs with invalid verificationMethod.id entries"**:
 **Tests:**
 
 ???????
+
 - MUST return HTTP code `400`
 - MUST return HTTP header `Content-Type` that contains `application/ld+json;profile="https://w3id.org/did-resolution"`
 - MUST return JSON object
 - JSON object MUST contain property `didResolutionMetadata.error` = `"invalidDidUrl"`
+
 ???????
 
 ## Test Scenario 6D: Invalid verificationMethod.controller entry
@@ -208,10 +212,12 @@ For all **"DIDs with invalid verificationMethod.controller entries"**:
 **Tests:**
 
 ???????
+
 - MUST return HTTP code `400`
 - MUST return HTTP header `Content-Type` that contains `application/ld+json;profile="https://w3id.org/did-resolution"`
 - MUST return JSON object
 - JSON object MUST contain property `didResolutionMetadata.error` = `"invalidDid"`
+
 ???????
 
 ## Test Scenario 6E: Invalid didDocument.id entry
@@ -225,10 +231,12 @@ For all **"DIDs with invalid didDocument.id entries"**:
 **Tests:**
 
 ???????
+
 - MUST return HTTP code `400`
 - MUST return HTTP header `Content-Type` that contains `application/ld+json;profile="https://w3id.org/did-resolution"`
 - MUST return JSON object
 - JSON object MUST contain property `didResolutionMetadata.error` = `"invalidDid"`
+
 ???????
 
 
