@@ -335,6 +335,34 @@ if (Cypress.env("TEST_400E") == true) {
   });
 }
 
+if (Cypress.env("TEST_400F") == true) {
+  describe.only("Test Scenario 6F: Invalid didDocument scheme", () => {
+    it("Raises invalidDid error when if scheme is not did", () => {
+      cy.fixture(path_example_dids)
+        .its("invalidDidDocumentId")
+        .then((list) => {
+          Object.keys(list).forEach((key) => {
+            const invalidDid = list[key];
+            cy.request({
+              method: "GET",
+              url: endpoint + invalidDid,
+              failOnStatusCode: false,
+            }).then((response) => {
+              expect(response).to.be.a("object");
+              expect(response.headers["content-type"]).to.contain(
+                'application/ld+json;profile="https://w3id.org/did-resolution"'
+              );
+              expect(response.status).to.eq(400);
+              expect(response.body.didResolutionMetadata.error).contains(
+                "invalidDid"
+              );
+            });
+          });
+        });
+    });
+  });
+}
+
 if (Cypress.env("TEST_200_F") == true) {
   describe("Test Scenario 7: DID URLs with fragments", () => {
     it("Can resolve a DID with a fragment", () => {
@@ -370,6 +398,7 @@ if (Cypress.env("TEST_200_F") == true) {
     });
   });
 }
+
 if (Cypress.env("TEST_200_RP") == true) {
   describe("Test Scenario 8: Service and relativeRef parameters", () => {
     it("Fetches DID", () => {
