@@ -245,7 +245,7 @@ For all **"DIDs with invalid didDocument schemes"**:
 
 **Input:**
 
-`curl -v -X GET 'https://dev.uniresolver.io/1.0/identifiers/did_to_be_defined_with_scheme_error'`
+`curl -v -X GET 'https://dev.uniresolver.io/1.0/identifiers/urn:uuid:c0bbe99d-2071-4fd3-a87e-6b710b369108'`
 
 **Tests:**
 
