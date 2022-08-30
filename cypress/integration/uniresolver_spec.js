@@ -193,7 +193,7 @@ if (Cypress.env("TEST_404") == true) {
 }
 
 if (Cypress.env("TEST_400A") == true) {
-  describe.only("Test Scenario 6A: Invalid DID", () => {
+  describe("Test Scenario 6A: Invalid DID", () => {
     it("Returns a HTTP code of 400 for an invalid DID", () => {
       cy.fixture(path_example_dids)
         .its("invalidDids")
@@ -233,15 +233,15 @@ if (Cypress.env("TEST_400B") == true) {
               url: endpoint + invalidDid,
               failOnStatusCode: false,
             }).then((response) => {
-              // todo: should this be 404 or 400?
-              expect(response.status).to.eq(400);
-              expect(response.headers["content-type"]).to.contain(
-                'application/ld+json;profile="https://w3id.org/did-resolution"'
-              );
               expect(response.body.didResolutionMetadata.error).contains(
                 "methodNotSupported"
               );
               expect(response).to.be.a("object");
+              // todo: should this be 404 or 400?
+              expect(response.status).to.eq(400); // returns 501
+              expect(response.headers["content-type"]).to.contain(
+                'application/ld+json;profile="https://w3id.org/did-resolution"'
+              );
             });
           });
         });
@@ -262,15 +262,15 @@ if (Cypress.env("TEST_400C") == true) {
               url: endpoint + invalidDid,
               failOnStatusCode: false,
             }).then((response) => {
-              // todo: should this be 404 or 400?
-              expect(response.status).to.eq(400);
+              expect(response).to.be.a("object");
               expect(response.headers["content-type"]).to.contain(
                 'application/ld+json;profile="https://w3id.org/did-resolution"'
               );
-              expect(response).to.be.a("object");
+              // todo: should this be 404 or 400?
+              expect(response.status).to.eq(400); // return 200
               expect(response.body.didResolutionMetadata.error).contains(
                 "invalidDidUrl"
-              );
+              ); // doesn't exist
             });
           });
         });
@@ -291,14 +291,15 @@ if (Cypress.env("TEST_400D") == true) {
               url: endpoint + invalidDid,
               failOnStatusCode: false,
             }).then((response) => {
-              // todo: should this be 404 or 400?
-              expect(response.status).to.eq(400);
+              expect(response).to.be.a("object");
               expect(response.headers["content-type"]).to.contain(
                 'application/ld+json;profile="https://w3id.org/did-resolution"'
               );
+              // todo: should this be 404 or 400?
+              expect(response.status).to.eq(400); // returns 200
               expect(response.body.didResolutionMetadata.error).contains(
                 "invalidDid"
-              );
+              ); // doesn't exist
             });
           });
         });
@@ -307,9 +308,8 @@ if (Cypress.env("TEST_400D") == true) {
 }
 
 if (Cypress.env("TEST_400E") == true) {
-  describe.only("Test Scenario 6E: invalid didDocument.id", () => {
+  describe("Test Scenario 6E: invalid didDocument.id", () => {
     it("Raises error when didDocument.id is invalid", () => {
-      // todo: pass in variable
       cy.fixture(path_example_dids)
         .its("invalidDidDocumentId")
         .then((list) => {
@@ -320,11 +320,11 @@ if (Cypress.env("TEST_400E") == true) {
               url: endpoint + invalidDid,
               failOnStatusCode: false,
             }).then((response) => {
-              // todo: should this be 404 or 400?
-              expect(response.status).to.eq(400);
+              expect(response).to.be.a("object");
               expect(response.headers["content-type"]).to.contain(
                 'application/ld+json;profile="https://w3id.org/did-resolution"'
               );
+              expect(response.status).to.eq(400);
               expect(response.body.didResolutionMetadata.error).contains(
                 "invalidDid"
               );

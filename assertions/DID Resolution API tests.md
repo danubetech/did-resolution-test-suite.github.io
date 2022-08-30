@@ -259,6 +259,75 @@ For all **"DIDs with invalid didDocument schemes"**:
 ???????
 
 
+## Test Scenario 6G: DID that causes a notAllowedLocalDerivedKey error/warning
+
+**Input:**
+
+`curl -X GET -H "Authorization: Bearer ...token.here..." 
+"https://resolver.svip.danubetech.com/1.0/identifiers/did:web:danubetech.com:did:test1"`
+**Tests:**
+
+???????
+
+- MUST return HTTP code `400`
+- MUST return HTTP header `Content-Type` that contains `application/ld+json;profile="https://w3id.org/did-resolution"`
+- MUST return JSON object
+- JSON object MUST contain property `didResolutionMetadata.error` = `"notAllowedLocalDerivedKey"`
+
+???????
+
+## Test Scenario 6H: DID that causes a notAllowedLocalDuplicateKey error/warning
+
+**Input:**
+
+`curl -X GET -H "Authorization: Bearer ...token.here..."
+"https://resolver.svip.danubetech.com/1.0/identifiers/did:web:danubetech.com:did:test2"`
+**Tests:**
+
+???????
+
+- MUST return HTTP code `400`
+- MUST return HTTP header `Content-Type` that contains `application/ld+json;profile="https://w3id.org/did-resolution"`
+- MUST return JSON object
+- JSON object MUST contain property `didResolutionMetadata.error` = `"notAllowedLocalDuplicateKey"`
+
+???????
+
+## Test Scenario 6I: DID that causes a notAllowedKeyType error/warning
+
+**Input:**
+
+`curl -X GET -H "Authorization: Bearer ...token.here..."
+"https://resolver.svip.danubetech.com/1.0/identifiers/did:web:danubetech.com:did:test3"`
+**Tests:**
+
+???????
+
+- MUST return HTTP code `400`
+- MUST return HTTP header `Content-Type` that contains `application/ld+json;profile="https://w3id.org/did-resolution"`
+- MUST return JSON object
+- JSON object MUST contain property `didResolutionMetadata.error` = `"notAllowedKeyType"`
+
+???????
+
+## Test Scenario 6J: DID that causes a notAllowedMethod error/warning
+
+**Input:**
+
+`curl -X GET -H "Authorization: Bearer ...token.here..."
+"https://resolver.svip.danubetech.com/1.0/identifiers/did:github:gjgd"`
+**Tests:**
+
+???????
+
+- MUST return HTTP code `400`
+- MUST return HTTP header `Content-Type` that contains `application/ld+json;profile="https://w3id.org/did-resolution"`
+- MUST return JSON object
+- JSON object MUST contain property `didResolutionMetadata.error` = `"notAllowedMethod"`
+
+???????
+
+
 ## Test Scenario 7: DID URLs with fragments
 
 For all **"DID URLs with fragments"**:
