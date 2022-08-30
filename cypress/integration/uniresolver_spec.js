@@ -8,6 +8,7 @@ if (Cypress.env("TEST_200") == true) {
     "Test Scenario 1: DID Resolution Result fixtures: " + endpoint,
     () => {
       it("A correct DID can be resolved", () => {
+        cy.clearCookies();
         cy.fixture(path_example_dids)
           .its("normalDids")
           .then((list) => {
@@ -248,7 +249,7 @@ if (Cypress.env("TEST_400B") == true) {
     });
   });
 }
-
+// test
 if (Cypress.env("TEST_400C") == true) {
   describe("Test Scenario 6C: invalid verificationMethod.id", () => {
     it("Raises error when verificationMethod.id is invalid", () => {
