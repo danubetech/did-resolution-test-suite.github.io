@@ -399,6 +399,7 @@ if (Cypress.env("TEST_200_F") == true) {
   });
 }
 
+// test
 if (Cypress.env("TEST_200_RP") == true) {
   describe("Test Scenario 8: Service and relativeRef parameters", () => {
     it("Fetches DID", () => {
