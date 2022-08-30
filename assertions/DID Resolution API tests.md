@@ -263,7 +263,7 @@ For all **"DIDs with invalid didDocument schemes"**:
 
 **Input:**
 
-`curl -X GET -H "Authorization: Bearer ...token.here..." 
+`curl -X GET -H "Authorization: Bearer ...token.here..."
 "https://resolver.svip.danubetech.com/1.0/identifiers/did:web:danubetech.com:did:test1"`
 **Tests:**
 

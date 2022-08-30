@@ -337,8 +337,63 @@ if (Cypress.env("TEST_400E") == true) {
 }
 
 if (Cypress.env("TEST_400F") == true) {
-  describe.only("Test Scenario 6F: Invalid didDocument scheme", () => {
+  describe("Test Scenario 6F: Invalid didDocument scheme", () => {
     it("Raises invalidDid error when if scheme is not did", () => {
+      cy.fixture(path_example_dids)
+        .its("invalidDidScheme")
+        .then((list) => {
+          Object.keys(list).forEach((key) => {
+            const invalidDid = list[key];
+            cy.request({
+              method: "GET",
+              url: endpoint + invalidDid,
+              failOnStatusCode: false,
+            }).then((response) => {
+              expect(response).to.be.a("object");
+              expect(response.headers["content-type"]).to.contain(
+                'application/ld+json;profile="https://w3id.org/did-resolution"'
+              );
+              expect(response.status).to.eq(400);
+              expect(response.body.didResolutionMetadata.error).contains(
+                "invalidDid"
+              );
+            });
+          });
+        });
+    });
+  });
+}
+if (Cypress.env("TEST_400G") == true) {
+  describe("Test Scenario 6G: notAllowedLocalDerivedKey error/warning", () => {
+    it("Raises notAllowedLocalDerivedKey error when did is incorrect", () => {
+      cy.fixture(path_example_dids)
+        .its("notAllowedLocalDerivedKey")
+        .then((list) => {
+          Object.keys(list).forEach((key) => {
+            const invalidDid = list[key];
+            cy.request({
+              method: "GET",
+              url: endpoint + invalidDid,
+              failOnStatusCode: false,
+            }).then((response) => {
+              expect(response).to.be.a("object");
+              expect(response.headers["content-type"]).to.contain(
+                'application/ld+json;profile="https://w3id.org/did-resolution"'
+              );
+              expect(response.status).to.eq(400);
+              expect(response.body.didResolutionMetadata.error).contains(
+                "notAllowedLocalDerivedKey"
+              );
+            });
+          });
+        });
+    });
+  });
+}
+
+if (Cypress.env("TEST_400H") == true) {
+  describe("Test Scenario 6H: notAllowedLocalDuplicateKey error/warning", () => {
+    it("Raises notAllowedLocalDuplicateKey error when did is incorrect", () => {
       cy.fixture(path_example_dids)
         .its("invalidDidDocumentId")
         .then((list) => {
@@ -355,7 +410,64 @@ if (Cypress.env("TEST_400F") == true) {
               );
               expect(response.status).to.eq(400);
               expect(response.body.didResolutionMetadata.error).contains(
-                "invalidDid"
+                "notAllowedLocalDuplicateKey"
+              );
+            });
+          });
+        });
+    });
+  });
+}
+
+if (Cypress.env("TEST_400I") == true) {
+  describe("Test Scenario 6I: notAllowedKeyType error/warning", () => {
+    it("Raises notAllowedKeyType error when did is incorrect", () => {
+      cy.fixture(path_example_dids)
+        .its("invalidDidDocumentId")
+        .then((list) => {
+          Object.keys(list).forEach((key) => {
+            const invalidDid = list[key];
+            cy.request({
+              method: "GET",
+              url: endpoint + invalidDid,
+              failOnStatusCode: false,
+            }).then((response) => {
+              expect(response).to.be.a("object");
+              expect(response.headers["content-type"]).to.contain(
+                'application/ld+json;profile="https://w3id.org/did-resolution"'
+              );
+              expect(response.status).to.eq(400);
+              expect(response.body.didResolutionMetadata.error).contains(
+                "notAllowedKeyType"
+              );
+            });
+          });
+        });
+    });
+  });
+}
+
+//todo: is this the same as methodNotSupported?
+if (Cypress.env("TEST_400J") == true) {
+  describe("Test Scenario 6J: notAllowedMethod error/warning", () => {
+    it("Raises notAllowedMethod error when did is incorrect", () => {
+      cy.fixture(path_example_dids)
+        .its("notAllowedMethod")
+        .then((list) => {
+          Object.keys(list).forEach((key) => {
+            const invalidDid = list[key];
+            cy.request({
+              method: "GET",
+              url: endpoint + invalidDid,
+              failOnStatusCode: false,
+            }).then((response) => {
+              expect(response).to.be.a("object");
+              expect(response.headers["content-type"]).to.contain(
+                'application/ld+json;profile="https://w3id.org/did-resolution"'
+              );
+              expect(response.status).to.eq(400);
+              expect(response.body.didResolutionMetadata.error).contains(
+                "notAllowedMethod"
               );
             });
           });
