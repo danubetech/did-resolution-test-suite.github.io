@@ -10,10 +10,10 @@ describe(
                 .its("validDids")
                 .then((list) => {
                     Object.keys(list).forEach((key) => {
-                        const normalDid = list[key];
+                        const validDid = list[key];
                         cy.request({
                             method: "GET",
-                            url: endpoint + normalDid,
+                            url: endpoint + validDid,
                             failOnStatusCode: false,
                         }).as("request");
                         cy.get("@request").then((response) => {
@@ -54,10 +54,10 @@ describe("Test Scenario 2: JSON-LD DID document", () => {
             .its("validDids")
             .then((list) => {
                 Object.keys(list).forEach((key) => {
-                    const normalDid = list[key];
+                    const validDid = list[key];
                     cy.request({
                         method: "GET",
-                        url: endpoint + normalDid,
+                        url: endpoint + validDid,
                         headers: {Accept: "application/did+ld+json"},
                         failOnStatusCode: false,
                     }).as("request");
@@ -70,7 +70,7 @@ describe("Test Scenario 2: JSON-LD DID document", () => {
                             expect(response).to.be.a("object");
                         });
                         expect(response.body).not.to.have.property("didDocument");
-                        expect(response.body["id"]).to.contain(normalDid);
+                        expect(response.body["id"]).to.contain(validDid);
                     });
                 });
             });
@@ -83,10 +83,10 @@ describe("Test Scenario 2b: CBOR DID document: " + endpoint, () => {
             .its("validDids")
             .then((list) => {
                 Object.keys(list).forEach((key) => {
-                    const normalDid = list[key];
+                    const validDid = list[key];
                     cy.request({
                         method: "GET",
-                        url: endpoint + normalDid,
+                        url: endpoint + validDid,
                         headers: {Accept: "application/did+cbor"},
                         failOnStatusCode: false,
                     }).as("request");
@@ -109,10 +109,10 @@ describe("Test Scenario 3: Representation not supported", () => {
             .its("validDids")
             .then((list) => {
                 Object.keys(list).forEach((key) => {
-                    const normalDid = list[key];
+                    const validDid = list[key];
                     cy.request({
                         method: "GET",
-                        url: endpoint + normalDid,
+                        url: endpoint + validDid,
                         headers: {Accept: "image/png"},
                         failOnStatusCode: false,
                     }).then((response) => {
