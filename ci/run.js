@@ -7,12 +7,18 @@ if (process.env.config !== undefined) {
     const config = require(process.env.config);
     fs.writeFileSync(
         "cypress/fixtures/example_dids.json",
-        JSON.stringify(config.exampleDids, null, 2)
+        JSON.stringify(config.testData, null, 2)
     );
 
-    runOptions.env.ENDPOINT = config.endpoint;
+    const specs = [];
+    Object.keys(config.testData).forEach((key) => {
+        specs.push(`cypress/integration/${key}.spec.js`)
+    })
+    runOptions.spec = specs;
 
-    runOptions.spec = config.specs;
+    runOptions.env = {
+        ENDPOINT: config.endpoint
+    };
 
 } else {
 
