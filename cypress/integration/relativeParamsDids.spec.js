@@ -1,5 +1,5 @@
 const endpoint = Cypress.env("ENDPOINT");
-const exampleDids = "../fixtures/example_dids.json";
+const exampleDids = "../fixtures/testData.json";
 
 describe("Test Scenario 8: Service and relativeRef parameters", () => {
     it("Fetches DID", () => {

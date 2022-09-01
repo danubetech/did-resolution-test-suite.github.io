@@ -1,5 +1,5 @@
 const endpoint = Cypress.env("ENDPOINT");
-const exampleDids = "../fixtures/example_dids.json";
+const exampleDids = "../fixtures/testData.json";
 
 //todo: is this the same as methodNotSupported?
 describe("Test Scenario 6J: notAllowedMethod error/warning", () => {

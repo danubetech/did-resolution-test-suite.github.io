@@ -1,5 +1,5 @@
 const endpoint = Cypress.env("ENDPOINT");
-const exampleDids = "../fixtures/example_dids.json";
+const exampleDids = "../fixtures/testData.json";
 
 describe("Test Scenario 6D: invalid verificationMethod.controller", () => {
     it("Raises error when verificationMethod.controller is invalid", () => {

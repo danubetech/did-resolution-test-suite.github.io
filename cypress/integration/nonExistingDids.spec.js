@@ -1,5 +1,5 @@
 const endpoint = Cypress.env("ENDPOINT");
-const exampleDids = "../fixtures/example_dids.json";
+const exampleDids = "../fixtures/testData.json";
 
 describe("Test Scenario 5: Not found", () => {
     it("Returns an HTTP code of 404 for non-existent DIDs", () => {

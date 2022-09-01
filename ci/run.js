@@ -6,7 +6,7 @@ if (process.env.config !== undefined) {
 
     const config = require(process.env.config);
     fs.writeFileSync(
-        "cypress/fixtures/example_dids.json",
+        "cypress/fixtures/testData.json",
         JSON.stringify(config.testData, null, 2)
     );
 

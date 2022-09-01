@@ -1,5 +1,5 @@
 const endpoint = Cypress.env("ENDPOINT");
-const exampleDids = "../fixtures/example_dids.json";
+const exampleDids = "../fixtures/testData.json";
 
 describe("Test Scenario 6A: Invalid DID", () => {
     it("Returns a HTTP code of 400 for an invalid DID", () => {

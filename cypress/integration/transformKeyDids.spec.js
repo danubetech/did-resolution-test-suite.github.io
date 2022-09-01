@@ -1,5 +1,5 @@
 const endpoint = Cypress.env("ENDPOINT");
-const exampleDids = "../fixtures/example_dids.json";
+const exampleDids = "../fixtures/testData.json";
 
 describe("Test Scenario 9: DID URLs with transformKeys", () => {
     it("MUST return HTTP response status 200", () => {

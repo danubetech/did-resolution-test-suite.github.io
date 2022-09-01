@@ -1,5 +1,5 @@
 const endpoint = Cypress.env("ENDPOINT");
-const exampleDids = "../fixtures/example_dids.json";
+const exampleDids = "../fixtures/testData.json";
 
 describe("Test Scenario 6G: notAllowedLocalDerivedKey error/warning", () => {
     it("Raises notAllowedLocalDerivedKey error when did is incorrect", () => {
