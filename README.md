@@ -12,6 +12,22 @@ This repository runs API tests for the following endpoints:
 
 <!-- In the current version of this repository, the report of https://dev.uniresolver.io/1.0/identifiers/ is shown.  -->
 
+### Configure test suite
+
+Test runs can be configured by adding a file to the `config` folder at the root level of the repo.  
+- The file must hold a property `endpoint` and the value must include the full path to the resolver.  
+- The file must hold a property `testData` which should contain properties. If `testData` is empty no tests will be run.  
+
+Structure of `testData` is as following:
+- `Key` must be the prefix of a testfile in the `integration` folder. To run eg `validDids.spec.js` a property `validDids` must be added to `testData`
+- `Value` must be at least one DID that can be used for the respective test-file specified in `Key`
+- The same DIDs can be used in multiple tests if they are suited to each of them
+
+The `config` can be passed as an env variable like this:
+```bash
+config=../config/dev.uniresolver.io.json node ci/run.js
+```
+
 ### Running test suite locally
 
 To install Cypress and dependencies (first time):
@@ -76,40 +92,6 @@ SPEC=cypress/integration/admin/* npm test
 
 to run all tests in the admin folder.
 
-#### Run specific tests
-
-To run the test-suite with a custom set of tests in a CI env, it's advised to edit the `env` section in the [config file](https://github.com/danubetech/did-resolution-test-suite/blob/main/cypress.json) for cypress.  
-
-Tests can also be switched off and on by the usage of environment variables. By default, all tests and all specs are run. In order to run a subset of all tests, the environment variables of specific tests have to be switched off. This can be done by setting the environment variable to `false`.  
-
-*Note:* This environment variables are not supported by `npm test` but can be used with `cypress` 
-
-See below for a list of environment variables:
-
-````markdown 
-"TEST_200"              runs a test with a normal DID
-"TEST_200_JLD"          runs a test with a normal DID including a header
-"TEST_200_CBOR"         runs a test with a normal DID containing CBOR DID document
-"TEST_200_F"            runs a test with a DID with a fragment
-"TEST_406"              runs a test with an unsupported DID
-"TEST_410"              runs a test with a deactivated DID
-"TEST_404"              runs a test with a DID that is not found
-"TEST_400"              runs a test with an invalid DID
-"TEST_200_RP"           runs a test with a DID containing a relative parameter  
-"TEST_200_TK"           runs a test with a DID containing a transformKey                 
-"TEST_200_DURL"         runs a test with a DID containing a dereference a DID URL*
-"TEST_200_DRURL"        runs a test with a DID containing a dereference a DID URL**
-````
-
-`*:` containing the following header: `Accept: application/json`
-
-`**:` containing the following header: `Accept: application/ld+json;profile="https://w3c-ccg.github.io/did-resolution/`
-
-E.g. to skip the first test:
-
-```markdown
-npx cypress run -- --env TEST_200=false
-``` 
 
 ### Where to find the test reports
 The results will be stored in a local folder _/cypress/reports/mocha_.
