@@ -6,7 +6,7 @@
 [2022-10-07_00:56:14](https://w3c-ccg.github.io/did-resolution-test-suite/gh-pages/2022-10-07_00:56:14/mochareports/reports.html)  
 [2022-10-06_00:43:47](https://w3c-ccg.github.io/did-resolution-test-suite/gh-pages/2022-10-06_00:43:47/mochareports/reports.html)  
 [2022-10-05_00:49:21](https://w3c-ccg.github.io/did-resolution-test-suite/gh-pages/2022-10-05_00:49:21/mochareports/reports.html)  
-[2022-10-04_00:51:41](https://w3c-ccg.github.io/did-resolution-test-suite/gh-pages/2022-10-04_00:51:41/mochareports/reports.html)
+[2022-10-04_00:51:41](https://w3c-ccg.github.io/did-resolution-test-suite/gh-pages/2022-10-04_00:51:41/mochareports/reports.html)  
 [2022-10-03_00:41:03](https://w3c-ccg.github.io/did-resolution-test-suite/gh-pages/2022-10-03_00:41:03/mochareports/reports.html)  
 [2022-10-02_00:49:33](https://w3c-ccg.github.io/did-resolution-test-suite/gh-pages/2022-10-02_00:49:33/mochareports/reports.html)  
 [2022-10-01_00:57:34](https://w3c-ccg.github.io/did-resolution-test-suite/gh-pages/2022-10-01_00:57:34/mochareports/reports.html)  
