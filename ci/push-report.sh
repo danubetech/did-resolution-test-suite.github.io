@@ -15,7 +15,7 @@ mkdir "$REPORT_FOLDER"
 cp -r "$PWD/reports/." "$REPORT_FOLDER"
 
 echo "Add Link to main page"
-export REPORT_LINK="https://danubetech.github.io/did-resolution-test-suite/gh-pages/$DATE_WITH_TIME/mochareports/reports.html"
+export REPORT_LINK="https://w3c-ccg.github.io/did-resolution-test-suite/gh-pages/$DATE_WITH_TIME/mochareports/reports.html"
 sed -i "1s|^|[$DATE_WITH_TIME]($REPORT_LINK)  \n|" "$PWD/index.md"
 
 echo "Push result file to repo"
