@@ -1,3 +1,4 @@
+[2024-08-07_00:33:15](https://w3c-ccg.github.io/did-resolution-test-suite/gh-pages/2024-08-07_00:33:15/mochareports/reports.html)  
 [2024-08-06_00:33:02](https://w3c-ccg.github.io/did-resolution-test-suite/gh-pages/2024-08-06_00:33:02/mochareports/reports.html)  
 [2024-08-05_00:34:48](https://w3c-ccg.github.io/did-resolution-test-suite/gh-pages/2024-08-05_00:34:48/mochareports/reports.html)  
 [2024-08-04_00:36:11](https://w3c-ccg.github.io/did-resolution-test-suite/gh-pages/2024-08-04_00:36:11/mochareports/reports.html)  
